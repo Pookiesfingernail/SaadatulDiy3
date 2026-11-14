@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Sa'adatulDIY</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Delicious+Handrawn&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/6971c1c2cd.js" crossorigin="anonymous"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/account-menu.css">
+</head>
+
+<body>
+
+    <!-- HEADER / LOGO -->
+    <header>
+        <a href="index.html" style="text-decoration: none; display: flex; justify-content: center; width: 100%;">
+            <div class="logo-container">
+                <span class="fancy-text">Sa'adatul </span>
+                <span class="cute-text">
+                    <span style="color: #A8DCED;">D.I.Y</span>
+                </span>
+                <img src="photos/hook.png" alt="Crochet hook" class="logo-hook">
+            </div>
+        </a>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-bar">
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html" class="active">Shop</a></li>
+
+                <li class="has-dropdown">
+                    <span class="dropdown-title" tabindex="0">
+                        Custom <span class="arrow">⮟</span>
+                    </span>
+                    <ul class="dropdown">
+                        <li><a href="custom.html">Custom Keychain</a></li>
+                        <li><a href="custom2.html">Custom Figurine</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="review.html">Reviews</a></li>
+            </ul>
+
+            <div class="nav-icon">
+
+                <!-- Search Bar -->
+                <div class="searchbar">
+                    <input
+                        class="search-input"
+                        type="search"
+                        placeholder="Search"
+                    >
+                    <i class="fa-solid fa-magnifying-glass fa-xl search-icon"></i>
+                </div>
+
+                <!-- Cart -->
+                <div class="cart-icon">
+                    <a href="cart.html">
+                        <i class="fa-solid fa-bag-shopping fa-xl"></i>
+                    </a>
+                </div>
+
+                <!-- Profile -->
+                <div class="profile-icon">
+                    <a href="profile.html">
+                        <i class="fa-regular fa-circle-user fa-xl"></i>
+                    </a>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+
+    <!-- PRODUCT DETAILS -->
+    <main class="product-page-wrapper">
+
+        <div class="product-container">
+
+            <!-- LEFT SIDE: PRODUCT IMAGE -->
+            <div class="gallery-section">
+
+                <div class="main-image-container">
+
+                    <!-- Product Image Only -->
+                    <!-- Slideshow arrows removed -->
+                    <img
+                        src="photos/flowers.jpg"
+                        alt="Assorted Flowers Keychain"
+                        id="mainProductImage"
+                    >
+
+                </div>
+
+                <!-- Slideshow dots removed -->
+
+            </div>
+
+            <!-- RIGHT SIDE: PRODUCT DETAILS -->
+            <div class="details-section">
+
+                <!-- Product Name -->
+                <h1 class="product-title">
+                    Assorted Flowers Keychain
+                </h1>
+
+                <!-- Product Price -->
+                <p class="product-price">
+                    BND 15.00
+                </p>
+
+                <!-- Stock Availability -->
+                <div class="badges">
+                    <span class="badge green">
+                        In Stock (5 available)
+                    </span>
+                </div>
+
+                <!-- Product Description -->
+                <p class="product-desc">
+                    A flower that lasts forever.
+                </p>
+
+                <!-- OTHER DESIGNS -->
+                <div class="other-designs">
+
+                    <h3>Other Design</h3>
+
+                    <div class="design-options">
+
+                        <!-- Lavender Bouquet -->
+                        <div
+                            class="design-card active"
+                            onclick="selectDesign(this, 'photos/flowers.jpg')"
+                        >
+                            <img
+                                src="photos/flowers.jpg"
+                                alt="Lavender Bouquet"
+                            >
+
+                            <p>
+                                Lavender Bouquet Keychain
+                            </p>
+                        </div>
+
+                        <!-- Rose Bouquet -->
+                        <div
+                            class="design-card"
+                            onclick="selectDesign(this, 'photos/rose.jpg')"
+                        >
+                            <img
+                                src="photos/rose.jpg"
+                                alt="Rose Bouquet"
+                            >
+
+                            <p>
+                                Rose Bouquet Keychain
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- QUANTITY SELECTOR -->
+                <div class="quantity-section">
+
+                    <label for="qtyInput">
+                        Quantity
+                    </label>
+
+                    <div class="quantity-controls">
+
+                        <button
+                            type="button"
+                            class="qty-btn"
+                            id="minusBtn"
+                        >
+                            -
+                        </button>
+
+                        <input
+                            type="number"
+                            id="qtyInput"
+                            value="1"
+                            min="1"
+                            readonly
+                        >
+
+                        <button
+                            type="button"
+                            class="qty-btn"
+                            id="plusBtn"
+                        >
+                            +
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- ADD TO CART -->
+                <div class="action-row">
+
+                    <button
+                        type="button"
+                        class="add-to-cart-large"
+                    >
+                        Add to Cart
+                    </button>
+
+                </div>
+
+                <!-- Product Information removed -->
+
+            </div>
+
+        </div>
+
+        <!-- You May Also Like section removed -->
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="container">
+
+            <!-- Contact Information -->
+            <div class="footer-content">
+
+                <h3>Sa'adatul.D.I.Y Contact</h3>
+
+                <p>
+                    Phone:<br>
+                    +673 828 2379
+                </p>
+
+                <p>
+                    Email: Saadatul.Art@gmail.com
+                </p>
+
+                <h3>Cube Address (instocks)</h3>
+
+                <p>
+                    Box Of Cravings, Madang (B53)
+                </p>
+
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-content">
+
+                <h3>Quick Links</h3>
+
+                <ul class="List">
+
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+
+                    <li>
+                        <a href="shop.html">Shop</a>
+                    </li>
+
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+
+                    <li>
+                        <a href="review.html">Reviews</a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <!-- Social Media -->
+            <div class="footer-content">
+
+                <h3>Stay Updated</h3>
+
+                <ul class="List">
+
+                    <li>
+                        <a href="https://www.instagram.com/saadatuldiy/">
+                            <i class="fa-brands fa-instagram fa-2xl insta-icon"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.tiktok.com/@saadatuldiy">
+                            <i class="fa-brands fa-tiktok fa-2xl tiktok-icon"></i>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="bottom-bar">
+            <p>
+                &copy;2026, Sa'adatulD.I.Y. All rights reserved.
+            </p>
+        </div>
+
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script src="js/global.js"></script>
+    <script src="js/product.js"></script>
+
+</body>
+</html>

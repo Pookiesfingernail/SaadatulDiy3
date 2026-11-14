@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | Sa’adatulDIY</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Delicious+Handrawn&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6971c1c2cd.js" crossorigin="anonymous"></script>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/shop.css">
+    <link rel="stylesheet" href="css/account-menu.css">
+</head>
+
+<body>
+
+    <!-- HEADER / LOGO -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <div class="logo-container">
+                <span class="fancy-text">Sa'adatul </span>
+                <span class="cute-text">
+                    <span style="color: #A8DCED;">D.I.Y</span>
+                </span>
+                <img src="photos/hook.png" alt="Crochet hook" class="logo-hook">
+            </div>
+        </a>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-bar">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html" class="active">Shop</a></li>
+
+                <li class="has-dropdown">
+                <span class="dropdown-title">Custom <span class="arrow">⮟</span></span>
+                <ul class="dropdown">
+                    <li><a href="custom.html">Custom Keychain</a></li>
+                    <li><a href="custom2.html">Custom Figurine</a></li>
+                </ul>
+                </li>
+
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="review.html">Reviews</a></li>
+            </ul>
+            
+            <div class="nav-icon">
+                <div class="searchbar">
+                    <input class="search-input" type="search" placeholder="Search">
+                    <i class="fa-solid fa-magnifying-glass fa-xl search-icon"></i>
+                </div>
+                <div class="cart-icon">
+                    <a href="cart.html"><i class="fa-solid fa-bag-shopping fa-xl"></i></a>
+                </div>
+                <div class="profile-icon">
+                    <a href="profile.html"><i class="fa-regular fa-circle-user fa-xl"></i></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <!-- SHOP BANNER -->
+        <section class="shop-banner">
+            <h1>Shop</h1> 
+            <p>Handmade with love ♡</p>
+        </section>
+
+        <!-- FILTERS -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="keychain">Keychains</button>
+            <button class="filter-btn" data-filter="figurine">Figurine</button>
+            <button class="filter-btn" data-filter="plushie">Plushies</button>
+            <button class="filter-btn" data-filter="accessory">Accessories</button>
+        </div>
+
+        <!-- PRODUCT SECTIONS -->
+        <div class="shop-container">
+            
+            <!-- KEYCHAINS -->
+            <div class="category-section" id="section-keychain">
+                <div class="category-header">
+                    <h2>Keychains</h2>
+                    <a href="#" class="view-all">View all</a>
+                </div>
+                <div class="product-grid">
+                    
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Nailong_flower.JPEG" alt="Nailong Flower Keychain">
+                        </div>
+                        <div class="card-info">
+                            <h3>Nailong Flower Keychain</h3>
+                            <p class="price">BND 30.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/designs.png" alt="Assorted Flowers Keychain">
+                        </div>
+                        <div class="card-info">
+                            <h3>Assorted Flowers Keychain</h3>
+                            <p class="price">BND 15.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/BMO.JPEG" alt="BMO Keychain">
+                        </div>
+                        <div class="card-info">
+                            <h3>BMO Keychain</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Teddy.JPEG" alt="Teddy Keychain">
+                        </div>
+                        <div class="card-info">
+                            <h3>Teddy Keychain</h3>
+                            <p class="price">BND 12.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Whale.JPEG" alt="Whale Keychain">
+                        </div>
+                        <div class="card-info">
+                            <h3>Whale Keychain</h3>
+                            <p class="price">BND 6.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- FIGURINE -->
+            <div class="category-section" id="section-figurine">
+                <div class="category-header">
+                    <h2>Figurine</h2>
+                    <a href="#" class="view-all">View all</a>
+                </div>
+                <div class="product-grid">
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Teletubbies.JPEG" alt="Teletubbies Figurines">
+                        </div>
+                        <div class="card-info">
+                            <h3>Teletubbies Figurines</h3>
+                            <p class="price">BND 30.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Princess Aurora.JPEG" alt="Princess Aurora Figurine">
+                        </div>
+                        <div class="card-info">
+                            <h3>Princess Aurora Figurine</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Rapunzel.JPEG" alt="Rapunzel Figurine">
+                        </div>
+                        <div class="card-info">
+                            <h3>Rapunzel Figurine</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Ariel Mermaid.JPEG" alt="Princess Ariel Mermaid Figurine">
+                        </div>
+                        <div class="card-info">
+                            <h3>Princess Ariel Mermaid Figurine</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Princess Tiana.JPEG" alt="Princess Tiana Figurine">
+                        </div>
+                        <div class="card-info">
+                            <h3>Princess Tiana Figurine</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PLUSHIES -->
+            <div class="category-section" id="section-plushie">
+                <div class="category-header">
+                    <h2>Plushies</h2>
+                    <a href="#" class="view-all">View all</a>
+                </div>
+                <div class="product-grid">
+                    
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/RBAF_plushie.png" alt="Royal Brunei Armed Plushie">
+                        </div>
+                        <div class="card-info">
+                            <h3>Royal Brunei Armed Plushie</h3>
+                            <p class="price">BND 180.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Shaun_Bitzer.JPEG" alt="Shaun & Bitzer Plushie">
+                        </div>
+                        <div class="card-info">
+                            <h3>Shaun & Bitzer Plushie</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Cutie_the_Elephant.JPEG" alt="Cutie The ELephant Plushie">
+                        </div>
+                        <div class="card-info">
+                            <h3>Cutie The Elephant Plushie</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Overall_Elephant.JPEG" alt="Pink Overall ELephant Plushie">
+                        </div>
+                        <div class="card-info">
+                            <h3>Pink Overall Elephant Plushie</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Appa_Bison.JPEG" alt="Appa Bison Plushie">
+                        </div>
+                        <div class="card-info">
+                            <h3>Appa Bison Plushie</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ACCESSORIES -->
+            <div class="category-section" id="section-accessory">
+                <div class="category-header">
+                    <h2>Accessories</h2>
+                    <a href="#" class="view-all">View all</a>
+                </div>
+                <div class="product-grid">
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Elephant Hanger.JPEG" alt="Elephant Car Hanger">
+                        </div>
+                        <div class="card-info">
+                            <h3>Elephant Car Hanger</h3>
+                            <p class="price">BND 30.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Patrick Hanger.JPEG" alt="Patrick Car Hanger">
+                        </div>
+                        <div class="card-info">
+                            <h3>Patrick Car Hanger</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Coaster.JPEG" alt="Coaster">
+                        </div>
+                        <div class="card-info">
+                            <h3>Coaster</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Pouch.JPEG" alt="Pouch">
+                        </div>
+                        <div class="card-info">
+                            <h3>Pouch</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-image-wrapper">
+                            <img src="../photos/Bracelet.JPEG" alt="Bracelet">
+                        </div>
+                        <div class="card-info">
+                            <h3>Bracelet</h3>
+                            <p class="price">BND 20.00</p>
+                            <div class="card-actions">
+                                <a href="product.html" class="view-detail-btn">View Detail</a>
+                                <button class="wishlist-btn" aria-label="Add to favourites">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- SHOP SPECIFIC JS -->
+    <script src="js/global.js"></script>
+    <script src="js/shop.js"></script>
+</body>
+</html>
