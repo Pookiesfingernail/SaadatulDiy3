@@ -1,0 +1,499 @@
+/* =========================================
+   REVIEW PAGE SPECIFIC STYLES
+   ========================================= */
+
+/* --- 1. FORCE INTER FONT --- */
+body, 
+.review-banner, 
+.review-card, 
+#reviewForm, 
+.footer,
+button,
+input, 
+textarea {
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* --- 2. KILL THE LINES UNDER THE LOGO --- */
+header a::after,
+.logo-link::after,
+header .logo-container::after {
+    display: none !important;
+    content: none !important;
+    background: transparent !important;
+    height: 0 !important;
+}
+
+header a, 
+.logo-link {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+/* --- 3. THE PURPLE BANNER --- */
+.review-banner {
+    background: #ded3e9 !important; 
+    background-image: none !important; 
+    text-align: center !important;
+    padding: 60px 20px !important; 
+    margin: 30px 3% !important;
+    border-radius: 10px;
+    min-height: auto !important;
+    display: block !important;
+}
+
+.review-banner h1 {
+    color: #ffffff !important;
+    font-size: 42px !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+    margin-bottom: 10px !important;
+}
+
+.review-banner p {
+    color: #ffffff !important;
+    font-size: 16px !important;
+    margin: 0 !important;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* --- 4. MAIN LAYOUT --- */
+.review-container {
+    max-width: 1050px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.review-card {
+    background: white;
+    padding: 16px;
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.14);
+    min-width: 0;
+    border: 1px solid #eaeaea;
+}
+
+.review-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #263e78;
+}
+
+/* --- 5. SOLID BLUE & YELLOW STARS --- */
+.stars {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.star {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: #1c3169;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    position: relative;
+}
+
+/* Only stars with the "filled" class show the yellow centre -
+   this lets 1-5 star ratings display correctly. */
+.star.filled::after {
+    content: "";
+    position: absolute;
+    top: 2px;    
+    left: 2px;   
+    right: 2px;  
+    bottom: 2px; 
+    background-color: #ffeb3b;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.review-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.review-photo {
+    width: 42%;
+    max-width: 150px;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.placeholder-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8e2f1;
+    font-size: 48px;
+    color: #999;
+}
+
+.review-content p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #263b67;
+    margin: 0;
+}
+
+.product-name {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 9px;
+    color: #7b849e;
+}
+
+/* --- 6. THE REVIEW FORM --- */
+.review-form-section {
+    margin-top: 35px;
+    background: #f2f0fb;
+    border: 1px solid #c8c9e8;
+    border-radius: 9px;
+    padding: 25px;
+}
+
+.review-form-section h2 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #263e78;
+}
+
+.form-description {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    color: #5e6e94;
+}
+
+#reviewForm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#reviewForm > label {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 7px;
+    color: #263e78;
+}
+
+#reviewForm > label span {
+    font-size: 12px;
+    font-weight: 400;
+    color: #7b849e;
+}
+
+#reviewForm input[type="text"],
+#reviewForm textarea,
+#reviewForm input[type="file"] {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #c5cde1;
+    border-radius: 5px;
+    background: white;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px;
+    color: #24365d;
+}
+
+#reviewForm textarea {
+    resize: vertical;
+    line-height: 1.5;
+}
+
+#reviewForm input:focus,
+#reviewForm textarea:focus {
+    outline: 2px solid #b9a5d8;
+}
+
+/* --- 7. FORM STAR RATING --- */
+.rating-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+    width: fit-content;
+}
+
+.rating-input input {
+    display: none;
+}
+
+.rating-input label {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    position: relative;
+}
+
+.form-star {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    transition: 0.2s;
+}
+
+.rating-input label:hover .form-star,
+.rating-input label:hover ~ label .form-star,
+.rating-input input:checked ~ label .form-star {
+    background-color: #1c3169;
+}
+
+/* Selected rating: review.js adds .filled to the labels whose
+   star value is <= the chosen rating (1-5). */
+.rating-input label.filled .form-star {
+    background-color: #1c3169;
+}
+
+.rating-input label::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    background-color: #ffeb3b;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    opacity: 0;
+    transition: 0.2s;
+}
+
+.rating-input label:hover::after,
+.rating-input label:hover ~ label::after,
+.rating-input label.filled::after {
+    opacity: 1;
+}
+
+/* --- Review photo previews with remove (X) button --- */
+.image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.photo-preview-item {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 8px;
+    overflow: visible;
+}
+
+.photo-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    border: 1px solid #e3e0ee;
+}
+
+.photo-remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background: #c0392b;
+    color: #fff;
+    font-size: 13px;
+    line-height: 24px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.photo-remove-btn:hover {
+    background: #96281b;
+}
+
+/* Image Preview */
+.image-preview img {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 7px;
+    margin-top: 5px;
+    object-fit: cover;
+}
+
+/* Submit Button */
+.submit-button {
+    align-self: center;
+    margin-top: 15px;
+    width: 150px;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #b39bcf;
+    color: white;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transition: 0.2s;
+}
+
+.submit-button:hover {
+    background: #9c82bd;
+}
+
+/* =========================================
+   FOOTER (Matches Home Page)
+   ========================================= */
+footer {
+    background: #A6CCE0;
+    padding-top: 10px;
+    color: white;
+    width: 100%;
+    margin-top: 50px; 
+}
+
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.footer-content {
+    width: 33.3%;
+}
+
+.footer-content h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.footer-content p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1em;
+    font-weight: 500;
+    width: 190px;
+    margin: auto;
+    padding: 4px;
+}
+
+.footer-content ul {
+    text-align: center;
+}
+
+.List {
+    padding: 0;
+    list-style: none;
+}
+
+.List li {
+    width: auto;
+    text-align: center;
+    padding: 7px;
+    position: relative;
+}
+
+.List li a {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.List li a:hover {
+    color: #1c3169;
+}
+
+.bottom-bar {
+    background: #90bfd8;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+.bottom-bar p {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+.footer-content:last-child .List {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-content:last-child .List li {
+    padding: 5px;
+}
+
+.insta-icon,
+.tiktok-icon {
+    color: white;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.insta-icon:hover,
+.tiktok-icon:hover {
+    color: #1c3169;
+    transform: scale(1.2);
+}
+
+/* --- 8. MOBILE RESPONSIVE --- */
+@media (max-width: 750px) {
+    .review-banner { padding: 40px 15px !important; margin: 20px 15px !important; }
+    .review-banner h1 { font-size: 32px !important; }
+    .review-container { padding: 0 12px; margin: 18px auto; }
+    .review-grid { gap: 12px; grid-template-columns: 1fr; }
+    .review-card { padding: 15px; }
+    .review-content { flex-direction: column; gap: 10px; }
+    .review-photo { width: 100%; max-width: none; aspect-ratio: 16/9; }
+    .review-form-section { padding: 15px; }
+
+    /* Footer Mobile */
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    
+    .footer-content {
+        width: 100%;
+    }
+}
+/* --- Independent scrolling for the review collection ---
+   The review grid scrolls on its own while the review form
+   below stays visible. Works on desktop and smaller screens. */
+#reviewGrid {
+    max-height: 65vh;
+    overflow-y: auto;
+    padding-right: 10px;
+    align-content: start;
+}
+#reviewGrid::-webkit-scrollbar { width: 8px; }
+#reviewGrid::-webkit-scrollbar-thumb { background: #c9cde6; border-radius: 4px; }

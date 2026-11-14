@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <rect width="600" height="600" fill="#f3eefb"/>
+  <rect x="30" y="30" width="540" height="540" rx="24" fill="none" stroke="#B39BDC" stroke-width="6" stroke-dasharray="18 12"/>
+  <text x="300" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" font-weight="bold" fill="#7b55b5">SAMPLE PRODUCT</text>
+  <text x="300" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#465b8b">Sample Crochet Keychain</text>
+  <text x="300" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#8a8a99">Replace with real photo</text>
+</svg>

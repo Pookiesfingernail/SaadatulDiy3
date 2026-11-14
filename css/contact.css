@@ -1,0 +1,339 @@
+body {
+    margin: 0;
+}
+
+.logo-link {
+    display: block;
+    text-decoration: none;
+}
+
+nav {
+    box-sizing: border-box;
+}
+
+.contact-context {
+    background-image: url(../photos/ContactBanner.png);
+    width: 60%;
+    background-position: center 80%;
+    background-size: cover;
+    padding: 40px 20%;
+    overflow: visible; 
+    display: inline-flex;
+    align-items: center;
+    height: 290px;
+    min-height: 100%;
+}
+
+.phone-image {
+    transform: translate(40px, -60px);
+    width: 65%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(1px 4px rgba(18, 6, 6, 0.374));
+}
+
+
+.contact-context h1 {
+    color: white;
+    font-family: 'Jomolhari', sans-serif;
+    font-size: 5.4em;
+    text-align: left;
+    font-weight: 100;
+    position: relative;
+    transform: translate(-70px, -10px);
+    text-shadow: 2px 2px 4px rgba(0,0,0.3);
+}
+
+.contact-elements {
+    transform: translateY(40px);
+}
+
+/*-----------------------SaadatulDiy Contact details----------------------*/
+
+.contact-details h4 {
+    font-family: 'inter', sans-serif;
+    font-size: 1.3em;
+    font-weight: 800;
+    color: #1C3169;
+    margin-bottom: 30px;
+}
+
+.contact-details p {
+    font-family: 'inter', sans-serif;
+    font-weight: 500;
+    color: #1C3169;
+    transform: translateY(-30px);
+    margin-top: 0px;
+}
+
+.saadatuldiy-details h4,
+.BOC-details h4 {
+    margin-bottom: 30px;
+}
+
+.saadatuldiy-details p 
+.BOC-details p {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.contact-details {
+    text-align: left;
+    transform: translateX(10%);
+    width: 50%;
+}
+
+/*-----------------------------Contact Form-------------------------------------------*/
+.contact-detailsform {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px;
+    width: 85%;
+    margin: 60px auto;
+}
+
+.contact-details {
+    width: 50%;
+}
+
+.contact-form {
+    width: 45%;
+    padding: 30px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.contact-form h2 {
+    font-family: 'inter', sans-serif;
+    color:#1C3169;
+    font-size: 1.9em;
+    margin-top: -12px;
+}
+
+.contact-form p {
+    font-family: 'inter', sans-serif;
+    font-size: 1.1em;
+    color: #1C3169;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.contact-form label {
+    display: block;
+    font-family: 'inter', sans-serif;
+    font-weight: 600;
+    color: #1C3169;
+    margin-bottom: 8px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid #BBD4E1;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'inter', sans-serif;
+    font-size: 1em;
+    outline: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #BBD4E1;
+    box-shadow: 0 0 5px rgba(179, 155, 220, 0.5);
+}
+
+.contact-form textarea{
+    resize: vertical;
+}
+
+.contact-form button {
+    background-color: #B39bdc;
+    color: white;
+    border: none;
+    padding: 5px 30px;
+    border-radius: 4px;
+    font-family: 'inter', sans-serif;
+    font-size: 1.4em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #9480b8;
+}
+
+/*----------------------------Social Media sections-------------------------------------*/
+.insta {
+    font-family: 'inter', sans-serif;
+    font-size: 1.3em;
+    color:#1C3169;
+    font-weight: 800;   
+}
+
+.tiktok {
+    font-family: 'inter', sans-serif;
+    font-size: 1.3em;
+    color:#1C3169;
+    font-weight: 800;  
+}
+
+.stay {
+    font-family: 'inter', sans-serif;
+}
+.updated {
+    font-family: 'Fuzzy bubbles', sans-serif;
+}
+
+.stay-updated {
+    color: #73B8DC;
+    font-size: 1.4em;
+    transform: translateX(15px);
+    text-shadow: 2px 2px 4px #00000035;
+    
+}
+
+.Social-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 130px;
+    width: 100%;
+    transform: translate( -15px,-50px);
+}
+
+.tiktok, 
+.insta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.Social-media h4, 
+.Social-media h2 {
+    margin: 0;
+}
+
+.Social-media2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    transform: translate( -2px, -40px);
+}
+
+.ig {
+    width: 300px;
+    height: auto;
+    box-shadow: 0 20px 25px -10px rgba(0,0,0,0.5);
+}
+
+.igs {
+    width: 300px;
+    height: auto;
+    box-shadow: 0 20px 25px -10px rgba(0,0,0,0.5);
+}
+
+.tt {
+    width: 300px; 
+    height: auto;
+    box-shadow: 0 20px 25px -10px rgba(0,0,0,0.5);
+}
+
+.tiktok-links {
+    text-decoration: none;
+}
+
+.tiktok-links:hover {
+    opacity: 0.7;
+}
+
+.insta-links {
+    text-decoration: none;
+}
+
+.insta-links:hover {
+    opacity: 0.7;
+}
+
+/*-------------------Tiktok Videos--------------------*/
+.tiktok-head {
+    font-size: 1.4em;
+    font-weight: 600;
+    color:#73B8DC;
+    text-shadow: 2px 2px 4px #00000035;
+    text-align: center;
+}
+
+.tiktoktext {
+    font-family: 'Fuzzy bubbles', sans-serif;
+}
+
+.videotext {
+    font-family: 'inter', sans-serif;
+}
+
+.tiktok-videos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.video-rows {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    transform: translateY(-40px);
+}
+
+.video-rows video {
+    width: 250px;
+    height: auto;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+}
+
+.bottom-section {
+    background-color: #b39bdc47;
+}
+/* --- Brunei phone input: fixed grey +673 prefix --- */
+.phone-input-group {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 20px;
+}
+.phone-input-group .phone-prefix {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    background: #ececf3;
+    color: #8a8a99;
+    border: 2px solid #BBD4E1;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    font-weight: 600;
+    user-select: none;
+}
+.phone-input-group input {
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 0;
+    flex: 1;
+    min-width: 0;
+}
+
+/* --- Contact form success / error message --- */
+.form-message {
+    margin-top: 14px;
+    font-size: 0.95em;
+    min-height: 1.2em;
+}
+.form-message.success { color: #2e7d32; }
+.form-message.error { color: #c0392b; }
