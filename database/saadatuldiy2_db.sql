@@ -329,7 +329,7 @@ CREATE TABLE IF NOT EXISTS email_notifications (
 --  add new products by copying these INSERT rows.
 -- =========================================================
 INSERT IGNORE INTO products (name, slug, category, price, description, image, stock) VALUES
-    ('Nailong Flower Keychain',   'nailong-flower-keychain',   'keychain', 30.00, 'Handmade crochet flower keychain.', 'photos/Nailong_flower.JPEG', NULL),
+    ('Nailong Flower Keychain',   'nailong-flower-keychain',   'keychain', 30.00, 'Handmade crochet flower keychain.', 'shopkeychain/Product-nailong', NULL),
     ('Assorted Flowers Keychain', 'assorted-flowers-keychain', 'keychain', 15.00, 'A flower that lasts forever.', 'photos/designs.png', 5),
     ('BMO Keychain',              'bmo-keychain',              'keychain', 20.00, 'Handmade crochet BMO keychain.', 'photos/BMO.JPEG', NULL),
     ('Teddy Keychain',            'teddy-keychain',            'keychain', 12.00, 'Cute handmade crochet teddy keychain.', 'photos/Teddy.JPEG', NULL),
