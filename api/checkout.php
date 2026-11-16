@@ -7,7 +7,7 @@
  * Creates ONE order from the customer's saved cart. The cart can
  * contain normal products (with designs) AND custom orders.
  * Afterwards an order notification email is sent to
- * ORDER_NOTIFY_EMAIL (Saadatul.Art2@gmail.com) via SMTP.
+ * ORDER_NOTIFY_EMAIL (saadatul.art2@gmail.com) via SMTP.
  */
 
 declare(strict_types=1);
@@ -65,6 +65,12 @@ if ($fields['country'] === '' || text_length($fields['country']) > 100) {
 $zone = null;
 $deliveryFee = 0.0;
 
+// Optional order notes written by the customer on the cart page.
+$orderNotes = clean_text($_POST['notes'] ?? '');
+if (text_length($orderNotes) > 2000) {
+    $errors['notes'] = 'Order notes must be 2000 characters or fewer.';
+}
+
 if ($isDelivery) {
     if ($fields['address'] === '' || text_length($fields['address']) > 255) {
         $errors['address'] = 'Please enter your delivery address.';
@@ -120,7 +126,7 @@ $pdo->beginTransaction();
 try {
     $stmt = $pdo->prepare(
         'SELECT ci.id AS cart_item_id, ci.product_id, ci.variant_id, ci.custom_order_id, ci.quantity,
-                p.id AS pid, p.name, p.price, p.image, p.stock,
+                p.id AS pid, p.name, p.category, p.price, p.image, p.stock,
                 v.id AS vid, v.name AS variant_name, v.price AS variant_price, v.image_path AS variant_image,
                 co.id AS cid, co.order_type AS custom_type, co.estimated_total AS custom_total
          FROM cart_items ci
@@ -158,6 +164,7 @@ try {
                 'custom_order_id' => (int) $row['custom_order_id'],
                 'design_name'     => null,
                 'name'            => $typeLabel . ' Order #' . (int) $row['cid'],
+                'category'        => $row['custom_type'],
                 'image'           => 'photos/custom-dolls.png',
                 'price'           => $price,
                 'quantity'        => $quantity,
@@ -184,6 +191,7 @@ try {
                 'custom_order_id' => null,
                 'design_name'     => $design,
                 'name'            => $row['name'] . ($design ? ' — ' . $design : ''),
+                'category'        => $row['category'],
                 'image'           => $row['variant_image'] ?: $row['image'],
                 'price'           => $price,
                 'quantity'        => $quantity,
@@ -210,8 +218,8 @@ try {
     $pdo->prepare(
         'INSERT INTO orders
             (user_id, email, full_name, phone, country, fulfilment, address, city, postcode,
-             shipping_zone, subtotal, delivery_fee, total, payment_proof, payment_status)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "pending_verification")'
+             shipping_zone, notes, subtotal, delivery_fee, total, payment_proof, payment_status)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "pending_verification")'
     )->execute([
         $userId,
         $fields['email'],
@@ -223,6 +231,7 @@ try {
         $isDelivery ? $fields['city'] : null,
         $isDelivery ? $fields['postcode'] : null,
         $zone,
+        $orderNotes === '' ? null : $orderNotes,
         money($subtotal),
         money($deliveryFee),
         money($total),
@@ -299,14 +308,14 @@ try {
 }
 
 // ---------- Order notification email ----------
-// Sent to ORDER_NOTIFY_EMAIL (Saadatul.Art2@gmail.com) via SMTP.
+// Sent to ORDER_NOTIFY_EMAIL (saadatul.art2@gmail.com) via SMTP.
 // The order is already saved - a failed email never loses it.
 $emailStatus = 'skipped';
 $emailError = null;
 
 try {
     $customer = current_user();
-    [$subject, $html, $attachments] = build_order_email($orderId, $fields, $orderRows, $subtotal, $deliveryFee, $total, $zone, $isDelivery, $proofPath);
+    [$subject, $html, $attachments] = build_order_email($orderId, $fields, $orderRows, $subtotal, $deliveryFee, $total, $zone, $isDelivery, $proofPath, $orderNotes);
 
     $pdo->prepare(
         'INSERT INTO email_notifications (order_id, recipient, subject, status, attempts)
@@ -364,20 +373,25 @@ json_response([
  * files to attach: custom reference photos + payment proof.
  * Returns [subject, htmlBody, attachmentPaths].
  */
-function build_order_email(int $orderId, array $fields, array $orderRows, float $subtotal, float $deliveryFee, float $total, ?string $zone, bool $isDelivery, string $proofPath): array
+function build_order_email(int $orderId, array $fields, array $orderRows, float $subtotal, float $deliveryFee, float $total, ?string $zone, bool $isDelivery, string $proofPath, string $orderNotes = ''): array
 {
     $e = fn (string $v): string => htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
 
     $orderNumber = 'SD-' . str_pad((string) $orderId, 5, '0', STR_PAD_LEFT);
-    $subject = "New Order {$orderNumber} - BND " . money($total);
+    $subject = "New Sa'adatulDIY Order — {$orderNumber}";
 
     $productRows = array_filter($orderRows, fn ($i) => $i['item_type'] === 'product');
     $customRows = array_filter($orderRows, fn ($i) => $i['item_type'] === 'custom');
 
     $html = '<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto">';
-    $html .= '<h2 style="color:#465b8b">New Order ' . $e($orderNumber) . '</h2>';
-    $html .= '<p><strong>Order date:</strong> ' . date('d M Y, h:i A') . '<br>';
-    $html .= '<strong>Customer:</strong> ' . $e($fields['full_name']) . '<br>';
+    $html .= '<h2 style="color:#465b8b">Sa\'adatul D.I.Y &mdash; New Order ' . $e($orderNumber) . '</h2>';
+    $html .= '<table cellpadding="4" cellspacing="0" style="border-collapse:collapse;margin-bottom:15px">';
+    $html .= '<tr><td><strong>Order number:</strong></td><td>' . $e($orderNumber) . '</td></tr>';
+    $html .= '<tr><td><strong>Order date:</strong></td><td>' . date('d M Y, h:i A') . '</td></tr>';
+    $html .= '<tr><td><strong>Order status:</strong></td><td>Pending (awaiting payment verification)</td></tr>';
+    $html .= '<tr><td><strong>Grand total:</strong></td><td><strong>BND ' . money($total) . '</strong></td></tr>';
+    $html .= '</table>';
+    $html .= '<p><strong>Customer:</strong> ' . $e($fields['full_name']) . '<br>';
     $html .= '<strong>Email:</strong> ' . $e($fields['email']) . '<br>';
     $html .= '<strong>Phone:</strong> ' . $e($fields['phone']) . '<br>';
     $html .= '<strong>Country:</strong> ' . $e($fields['country']) . '<br>';
@@ -390,10 +404,10 @@ function build_order_email(int $orderId, array $fields, array $orderRows, float 
 
     // ---- Section A: normal products ----
     if ($productRows) {
-        $html .= '<h3 style="color:#465b8b">Products</h3><table cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%">';
-        $html .= '<tr style="background:#eef2fb"><th align="left">Item</th><th>Design</th><th>Qty</th><th>Unit price</th><th>Subtotal</th></tr>';
+        $html .= '<h3 style="color:#465b8b">Products Ordered</h3><table cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%">';
+        $html .= '<tr style="background:#eef2fb"><th align="left">Product</th><th>Category</th><th>Design</th><th>Qty</th><th>Unit price</th><th>Subtotal</th></tr>';
         foreach ($productRows as $item) {
-            $html .= '<tr><td>' . $e($item['name']) . '</td><td>' . $e($item['design_name'] ?? '-') . '</td>'
+            $html .= '<tr><td>' . $e($item['name']) . '</td><td>' . $e(ucfirst($item['category'] ?? '-')) . '</td><td>' . $e($item['design_name'] ?? '-') . '</td>'
                 . '<td>' . $item['quantity'] . '</td><td>BND ' . money($item['price']) . '</td>'
                 . '<td>BND ' . money($item['price'] * $item['quantity']) . '</td></tr>';
         }
@@ -424,34 +438,58 @@ function build_order_email(int $orderId, array $fields, array $orderRows, float 
             $files->execute([$customId]);
             $fileRows = $files->fetchAll();
 
+            // Order-level customer instructions for this custom order.
+            $co = db()->prepare('SELECT order_type, special_notes FROM custom_orders WHERE id = ?');
+            $co->execute([$customId]);
+            $coRow = $co->fetch() ?: [];
+
             $typeLabel = $item['name']; // e.g. "Custom Keychain Order #3"
-            $html .= '<p><strong>' . $e($typeLabel) . '</strong> &mdash; BND ' . money($item['price']) . '</p><ul>';
+            $html .= '<p><strong>' . $e($typeLabel) . '</strong> (' . $e(ucfirst((string) ($coRow['order_type'] ?? 'custom'))) . ')'
+                . ' &mdash; Qty: ' . $item['quantity']
+                . ' &mdash; Estimated price: BND ' . money($item['price'] * $item['quantity']) . '</p><ul>';
 
             foreach ($dollRows as $doll) {
                 $acc = json_decode((string) $doll['accessories'], true) ?: [];
-                $html .= '<li>' . $e(ucfirst($doll['gender'])) . ' doll #' . (int) $doll['position']
-                    . ' &mdash; skin: ' . $e($doll['skin_tone'])
+                $html .= '<li>Customisation #' . (int) $doll['position'] . ' &mdash; ' . $e(ucfirst($doll['gender'])) . ' doll'
+                    . ' &mdash; skin tone: ' . $e($doll['skin_tone'])
                     . ', hair: ' . $e($doll['hair'])
-                    . ($doll['hair_note'] ? ' (' . $e($doll['hair_note']) . ')' : '')
+                    . ($doll['hair_note'] ? ' (colour/instructions: ' . $e($doll['hair_note']) . ')' : '')
                     . ', outfit: ' . $e($doll['outfit'])
-                    . ($doll['outfit_note'] ? ' (' . $e($doll['outfit_note']) . ')' : '')
+                    . ($doll['outfit_note'] ? ' (colour/instructions: ' . $e($doll['outfit_note']) . ')' : '')
                     . ($acc ? ', accessories: ' . $e(implode(', ', $acc)) : '')
                     . ($doll['accessory_note'] ? ' (' . $e($doll['accessory_note']) . ')' : '')
                     . ' &mdash; BND ' . money((float) $doll['item_total']) . '</li>';
             }
             $html .= '</ul>';
 
-            // Attach the reference photos so the shop can open them.
+            if (!empty($coRow['special_notes'])) {
+                $html .= '<p><strong>Customer instructions:</strong> ' . $e((string) $coRow['special_notes']) . '</p>';
+            }
+
+            // Reference photos: attached to the email AND linked when
+            // SITE_URL is configured (local dev has no public URL).
+            $siteUrl = defined('SITE_URL') ? rtrim((string) SITE_URL, '/') : '';
             foreach ($fileRows as $file) {
                 $path = CUSTOM_UPLOAD_DIR . '/' . basename($file['file_path']);
                 if (is_file($path)) {
                     $attachments[] = $path;
-                    $html .= '<p style="font-size:12px;color:#666">Attached photo: doll #' . (int) $file['position']
-                        . ' ' . $e($file['slot']) . ' reference'
-                        . ($file['original_name'] ? ' (' . $e($file['original_name']) . ')' : '') . '</p>';
+                    $html .= '<p style="font-size:12px;color:#666">Reference photo: doll #' . (int) $file['position']
+                        . ' ' . $e($file['slot'])
+                        . ($file['original_name'] ? ' (' . $e($file['original_name']) . ')' : '')
+                        . ' &mdash; attached to this email';
+                    if ($siteUrl !== '') {
+                        $html .= ' | <a href="' . $e($siteUrl . '/uploads/custom-orders/' . basename($file['file_path'])) . '">view photo</a>';
+                    }
+                    $html .= '</p>';
                 }
             }
         }
+    }
+
+    // ---- Customer order notes ----
+    if ($orderNotes !== '') {
+        $html .= '<h3 style="color:#465b8b">Customer Order Notes</h3>';
+        $html .= '<p>' . nl2br($e($orderNotes)) . '</p>';
     }
 
     // ---- Section C: order summary ----

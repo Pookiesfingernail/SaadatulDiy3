@@ -231,6 +231,11 @@ function renderOrders(orders) {
                     <span>${order.fulfilment === "pickup" ? "Pickup" : "Delivery - " + SDIY.escapeHtml(order.shippingZone || "")}</span>
                     <span>BND ${SDIY.formatPrice(order.deliveryFee)}</span>
                 </div>
+                ${order.notes ? `
+                <div class="order-line">
+                    <span>Notes: ${SDIY.escapeHtml(order.notes)}</span>
+                    <span></span>
+                </div>` : ""}
                 <div class="order-line total">
                     <span>Total</span>
                     <span>BND ${SDIY.formatPrice(order.total)}</span>

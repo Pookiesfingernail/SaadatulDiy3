@@ -100,8 +100,16 @@
                 <div id="cartItems" class="cart-items"></div>
             </section>
 
-            <aside class="cart-panel cart-summary">
-                <h2>Order Summary</h2>
+            <div class="cart-side">
+
+                <div class="cart-panel order-notes-panel">
+                    <h2>Order Notes</h2>
+                    <textarea id="orderNotes" rows="4" maxlength="2000"
+                        placeholder="Special instructions for your order (optional)"></textarea>
+                </div>
+
+                <aside class="cart-panel cart-summary">
+                    <h2>Order Summary</h2>
 
                 <div class="cart-summary-line">
                     <span>Subtotal</span>
@@ -122,8 +130,10 @@
                     Proceed to Checkout
                 </a>
 
-                <a href="shop.html" class="cart-back">Continue Shopping</a>
-            </aside>
+                    <a href="shop.html" class="cart-back">Continue Shopping</a>
+                </aside>
+
+            </div>
 
         </div>
     </main>
@@ -162,6 +172,6 @@
     </footer>
 
     <script src="js/global.js"></script>
-    <script src="js/cart.js"></script>
+    <script src="js/cart.js?v=2"></script>
 </body>
 </html>

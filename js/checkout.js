@@ -180,12 +180,19 @@ checkoutForm.addEventListener("submit", async event => {
     data.append("shipping", selected ? selected.value : "");
     data.append("proof", proof);
 
+    // Optional order notes written on the cart page.
+    try {
+        const notes = (localStorage.getItem("sdiyOrderNotes") || "").trim();
+        if (notes) data.append("notes", notes);
+    } catch (error) { /* storage unavailable - order goes without notes */ }
+
     placeOrderButtons.forEach(button => { button.disabled = true; });
 
     try {
         const result = await SDIY.api("checkout.php", { method: "POST", form: data });
 
         SDIY.setCartCount(0);
+        try { localStorage.removeItem("sdiyOrderNotes"); } catch (error) { /* ignore */ }
 
         // Show the real order number returned by the server.
         // The confirmation stays on screen until the customer

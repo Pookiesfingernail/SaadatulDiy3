@@ -1,0 +1,6 @@
+# Private mail configuration - contains the Gmail App Password.
+# Never commit real SMTP credentials.
+config/mail.local.php
+
+# Uploaded customer files (payment proofs, custom reference photos, reviews)
+uploads/

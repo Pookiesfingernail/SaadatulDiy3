@@ -14,7 +14,7 @@ require_method('GET');
 $pdo = db();
 
 $stmt = $pdo->prepare(
-    'SELECT id, fulfilment, shipping_zone, subtotal, delivery_fee, total, status, payment_status, created_at
+    'SELECT id, fulfilment, shipping_zone, notes, subtotal, delivery_fee, total, status, payment_status, created_at
      FROM orders WHERE user_id = ? ORDER BY created_at DESC, id DESC'
 );
 $stmt->execute([$userId]);
@@ -47,6 +47,7 @@ $orderList = array_map(fn ($order) => [
     'id'           => (int) $order['id'],
     'fulfilment'   => $order['fulfilment'],
     'shippingZone' => $order['shipping_zone'],
+    'notes'        => $order['notes'],
     'subtotal'     => (float) $order['subtotal'],
     'deliveryFee'  => (float) $order['delivery_fee'],
     'total'        => (float) $order['total'],

@@ -70,6 +70,32 @@
     font-size: 14px;
 }
 
+/* Right sidebar: Order Notes above Order Summary */
+.cart-side {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.order-notes-panel textarea {
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px 14px;
+    border: 1px solid #d5d5e0;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #333;
+    resize: vertical;
+    min-height: 90px;
+    box-sizing: border-box;
+}
+
+.order-notes-panel textarea:focus {
+    outline: none;
+    border-color: #a9c6e8;
+}
+
 .cart-column-heading {
     display: grid;
     grid-template-columns: 90px minmax(0, 1fr) auto auto;

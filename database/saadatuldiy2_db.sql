@@ -214,6 +214,7 @@ CREATE TABLE IF NOT EXISTS orders (
     city          VARCHAR(100) NULL,
     postcode      VARCHAR(20)  NULL,
     shipping_zone VARCHAR(50)  NULL,
+    notes         TEXT NULL COMMENT 'Order notes written by the customer on the cart page',
     subtotal      DECIMAL(10, 2) NOT NULL,
     delivery_fee  DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     total         DECIMAL(10, 2) NOT NULL,
@@ -260,6 +261,7 @@ CREATE TABLE IF NOT EXISTS order_items (
 -- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS reviews (
     id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id        INT UNSIGNED NULL COMMENT 'Logged-in customer who wrote the review (NULL = guest)',
     customer_name  VARCHAR(100) NOT NULL,
     product_name   VARCHAR(150) NOT NULL,
     rating         TINYINT UNSIGNED NOT NULL,
@@ -269,6 +271,9 @@ CREATE TABLE IF NOT EXISTS reviews (
     created_at     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     KEY idx_reviews_status (status, created_at),
+    KEY idx_reviews_user (user_id),
+    CONSTRAINT fk_reviews_user FOREIGN KEY (user_id)
+        REFERENCES users (id) ON DELETE SET NULL,
     CONSTRAINT chk_review_rating CHECK (rating BETWEEN 1 AND 5)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -323,49 +328,177 @@ CREATE TABLE IF NOT EXISTS email_notifications (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =========================================================
---  SAMPLE PRODUCTS (from shop.html)
---  PRODUCT PHOTO: image paths point inside the project
---  "photos" folder. Replace them with your own photos and
---  add new products by copying these INSERT rows.
+--  APPROVED PRODUCTS - exactly 20 (5 per category)
+--  Keychains=1 Figurines=2 Plushies=3 Accessories=4
+--
+--  Step 1 UPDATEs match rows by their ORIGINAL slug so the
+--  existing product IDs - and therefore carts, favourites
+--  and order history - stay connected. Step 2 INSERT IGNORE
+--  creates the same 20 products on a fresh database.
+--  No sample products are inserted.
 -- =========================================================
+UPDATE products SET name='Nailong Flower Keychain', slug='nailong-flower-keychain', category='keychain', price=30.00, stock=NULL, is_active=1,
+    description='Inspired by the adorable Nailong character, dressed up as a bright and cheerful sunflower! With its cute little face, vibrant orange petals and sunny yellow body, this little flower is sure to brighten up your day. Perfect for adding a touch of cuteness to your bag or keys! Height +-12cm.',
+    image='shopkeychain/Flower-nailong.png' WHERE slug='nailong-flower-keychain';
+UPDATE products SET name='Forget Me Not Flower Keychain', slug='forget-me-not-flower-keychain', category='keychain', price=15.00, stock=NULL, is_active=1,
+    description='A cluster of bright blue flowers in a pink wrap finished with a yellow bow, Height +-10cm.',
+    image='shopkeychain/Forgetmenot.png' WHERE slug='assorted-flowers-keychain';
+UPDATE products SET name='BMO Keychain', slug='bmo-keychain', category='keychain', price=20.00, stock=NULL, is_active=1,
+    description='A game-console character from Adventure time called BMO handmade crochet.',
+    image='shopkeychain/BMOs.png' WHERE slug='bmo-keychain';
+UPDATE products SET name='Teddy and Lottie Keychain', slug='teddy-lottie-keychain', category='keychain', price=11.00, stock=NULL, is_active=1,
+    description='Teddy and Lottie, the character from Mr.Bean.',
+    image='shopkeychain/Teddies.png' WHERE slug='teddy-keychain';
+UPDATE products SET name='Whale Keychain', slug='whale-keychain', category='keychain', price=6.00, stock=NULL, is_active=1,
+    description='A palm-sized blue whale with a white belly and a sweet little smile.',
+    image='shopkeychain/Whales.png' WHERE slug='whale-keychain';
+UPDATE products SET name='Teletubbies Figurine', slug='teletubbies-figurine', category='figurine', price=35.00, stock=NULL, is_active=1,
+    description='Inspired from children TV series called Teletubbies! Height +-25cm.',
+    image='shopfigurine/Teletubbies.png' WHERE slug='teletubbies-figurines';
+UPDATE products SET name='Princess Aurora Figurine', slug='princess-aurora-figurine', category='figurine', price=40.00, stock=NULL, is_active=1,
+    description='inspired from animated Disney movie called Princess Aurora! Known for her cursed by maleficent to fall into an eternal sleep after pricking her finger on a spinning wheel that can awakened by true love''s kiss! Height +-25cm.',
+    image='shopfigurine/PrincessAurora.png' WHERE slug='princess-aurora-figurine';
+UPDATE products SET name='Rapunzel Figurine', slug='rapunzel-figurine', category='figurine', price=48.00, stock=NULL, is_active=1,
+    description='inspired from animated Disney Movie called Tangled! Known for her long magical hair that gotten kidnapped by Mother Gothel since she was a baby and locks her away in a hidden tower! Height +-25cm.',
+    image='shopfigurine/Rapunzel.png' WHERE slug='rapunzel-figurine';
+UPDATE products SET name='Princess Ariel Mermaid Figurine', slug='ariel-mermaid-figurine', category='figurine', price=45.00, stock=NULL, is_active=1,
+    description='Inspired from an animated Disney movie called The Little Mermaid! A princess, daughter of King Triton and late Queen Athena in underwater kingdom of Atlantica. Height +-25cm.',
+    image='shopfigurine/MermaidA.png' WHERE slug='ariel-mermaid-figurine';
+UPDATE products SET name='Princess Tiana Figurine', slug='princess-tiana-figurine', category='figurine', price=45.00, stock=NULL, is_active=1,
+    description='Inspired from animated Disney movie called The Princess and the Frog. After marrying Prince Naveen, she transforms into a real princess and lift the frog curse!. Height +-25cm.',
+    image='shopfigurine/Tiana.png' WHERE slug='princess-tiana-figurine';
+UPDATE products SET name='Royal Brunei Armed Plushie', slug='rbaf-plushie', category='plushie', price=180.00, stock=NULL, is_active=1,
+    description='Challenging and expensive custom pieces for Bruneian Army lovers that reminds of them their family or army collectors! Height: +-45cm.',
+    image='shopplushie/RBA.png' WHERE slug='rbaf-plushie';
+UPDATE products SET name='Shaun and Bitzer Plushie', slug='shaun-bitzer-plushie', category='plushie', price=90.00, stock=NULL, is_active=1,
+    description='A cartoon inspired from Shaun The Sheep Series! Two bestfriends since childhood growing up on Mossy Bottom Farm. A commission or custom piece for special gift that reminded of their childhood show or their bestfriend. Height +-35cm.',
+    image='shopplushie/ShawnTheSheep.png' WHERE slug='shaun-bitzer-plushie';
+UPDATE products SET name='Crown Elephant Plushie', slug='crown-elephant-plushie', category='plushie', price=98.00, stock=NULL, is_active=1,
+    description='Amigurumi version inspired from a game called It Takes Two! A beloved toy princess character of Rose (main character) belongings. This gift can be perfect for toddlers and a fan of the inspired game! Height +-35cm.',
+    image='shopplushie/Cutie.png' WHERE slug='cutie-elephant-plushie';
+UPDATE products SET name='Baby Elephant Plushie', slug='baby-elephant-plushie', category='plushie', price=95.00, stock=NULL, is_active=1,
+    description='Very popular piece in crafting communities that''s known for its pink overalls and a perfect gift for toddlers & newborns! Height 34cm.',
+    image='shopplushie/BabyElephant.png' WHERE slug='pink-elephant-plushie';
+UPDATE products SET name='Appa Bison Plushie', slug='appa-bison-plushie', category='plushie', price=50.00, stock=NULL, is_active=1,
+    description='A cartoon inspired from Avatar: The Last Airbender! A longlife companion of Avatar Aang, the main protagonist of the series. Those who is a fan of avatar and wants their own companion too would love this! +-35cm.',
+    image='shopplushie/Appa.png' WHERE slug='appa-bison-plushie';
+UPDATE products SET name='Elephant Car Hanger', slug='elephant-car-hanger', category='accessory', price=13.00, stock=NULL, is_active=1,
+    description='A tiny grey elephant crochet sitting on a leaf swing with a cream flower.! +-10',
+    image='shopacc/ElephantHang.png' WHERE slug='elephant-car-hanger';
+UPDATE products SET name='Patrick Car Hanger', slug='patrick-car-hanger', category='accessory', price=15.00, stock=NULL, is_active=1,
+    description='A smiling Patrick hanging from a matching pink cord that can be hanged in your car, +-10.',
+    image='shopacc/PatrickHang.png' WHERE slug='patrick-car-hanger';
+UPDATE products SET name='Sunflower Pouch', slug='sunflower-pouch', category='accessory', price=12.00, stock=NULL, is_active=1,
+    description='A mini Sunflower pouch that you can use to keep your coins, earbuds, charger and more.',
+    image='shopacc/Sunflowerpouch.png' WHERE slug='coaster';
+UPDATE products SET name='Stitch Pouch', slug='stitch-pouch', category='accessory', price=20.00, stock=NULL, is_active=1,
+    description='A cute Stitch pouch that you can use to keep your coins, earbuds, keys, and other small essentials.',
+    image='shopacc/Stitch.png' WHERE slug='pouch';
+UPDATE products SET name='Bracelet', slug='bracelet', category='accessory', price=7.00, stock=NULL, is_active=1,
+    description='A pair of handmade crochet bands with little bows in two shades of pinks.',
+    image='shopacc/Bracelets.png' WHERE slug='bracelet';
+
 INSERT IGNORE INTO products (name, slug, category, price, description, image, stock) VALUES
-    ('Nailong Flower Keychain',   'nailong-flower-keychain',   'keychain', 30.00, 'Handmade crochet flower keychain.', 'photos/Nailong_flower.JPEG', NULL),
-    ('Assorted Flowers Keychain', 'assorted-flowers-keychain', 'keychain', 15.00, 'A flower that lasts forever.', 'photos/designs.png', 5),
-    ('BMO Keychain',              'bmo-keychain',              'keychain', 20.00, 'Handmade crochet BMO keychain.', 'photos/BMO.JPEG', NULL),
-    ('Teddy Keychain',            'teddy-keychain',            'keychain', 12.00, 'Cute handmade crochet teddy keychain.', 'photos/Teddy.JPEG', NULL),
-    ('Whale Keychain',            'whale-keychain',            'keychain',  6.00, 'Handmade crochet whale keychain.', 'photos/Whale.JPEG', NULL),
-    ('Teletubbies Figurines',     'teletubbies-figurines',     'figurine', 30.00, 'Handmade crochet Teletubbies figurines.', 'photos/Teletubbies.JPEG', NULL),
-    ('Princess Aurora Figurine',  'princess-aurora-figurine',  'figurine', 20.00, 'Handmade crochet Princess Aurora figurine.', 'photos/Princess Aurora.JPEG', NULL),
-    ('Rapunzel Figurine',         'rapunzel-figurine',         'figurine', 20.00, 'Handmade crochet Rapunzel figurine.', 'photos/Rapunzel.JPEG', NULL),
-    ('Princess Ariel Mermaid Figurine', 'ariel-mermaid-figurine', 'figurine', 20.00, 'Handmade crochet Ariel mermaid figurine.', 'photos/Ariel Mermaid.JPEG', NULL),
-    ('Princess Tiana Figurine',   'princess-tiana-figurine',   'figurine', 20.00, 'Handmade crochet Princess Tiana figurine.', 'photos/Princess Tiana.JPEG', NULL),
-    ('Royal Brunei Armed Plushie','rbaf-plushie',              'plushie', 180.00, 'Signature handmade RBAF plushie, about 45cm tall.', 'photos/RBAF_plushie.png', NULL),
-    ('Shaun & Bitzer Plushie',    'shaun-bitzer-plushie',      'plushie',  20.00, 'Handmade crochet Shaun & Bitzer plushie.', 'photos/Shaun_Bitzer.JPEG', NULL),
-    ('Cutie The Elephant Plushie','cutie-elephant-plushie',   'plushie',  20.00, 'Handmade crochet elephant plushie.', 'photos/Cutie_the_Elephant.JPEG', NULL),
-    ('Pink Overall Elephant Plushie','pink-elephant-plushie', 'plushie',  20.00, 'Handmade crochet elephant plushie in pink overalls.', 'photos/Overall_Elephant.JPEG', NULL),
-    ('Appa Bison Plushie',        'appa-bison-plushie',        'plushie',  20.00, 'Handmade crochet Appa bison plushie.', 'photos/Appa_Bison.JPEG', NULL),
-    ('Elephant Car Hanger',       'elephant-car-hanger',       'accessory',30.00, 'Handmade crochet elephant car hanger.', 'photos/Elephant Hanger.JPEG', NULL),
-    ('Patrick Car Hanger',        'patrick-car-hanger',        'accessory',20.00, 'Handmade crochet Patrick car hanger.', 'photos/Patrick Hanger.JPEG', NULL),
-    ('Coaster',                   'coaster',                   'accessory',20.00, 'Handmade crochet coaster.', 'photos/Coaster.JPEG', NULL),
-    ('Pouch',                     'pouch',                     'accessory',20.00, 'Handmade crochet pouch.', 'photos/Pouch.JPEG', NULL),
-    ('Bracelet',                  'bracelet',                  'accessory',20.00, 'Handmade crochet bracelet.', 'photos/Bracelet.JPEG', NULL);
+    ('Nailong Flower Keychain',   'nailong-flower-keychain',   'keychain', 30.00, 'Inspired by the adorable Nailong character, dressed up as a bright and cheerful sunflower! With its cute little face, vibrant orange petals and sunny yellow body, this little flower is sure to brighten up your day. Perfect for adding a touch of cuteness to your bag or keys! Height +-12cm.', 'shopkeychain/Flower-nailong.png', NULL),
+    ('Forget Me Not Flower Keychain', 'forget-me-not-flower-keychain', 'keychain', 15.00, 'A cluster of bright blue flowers in a pink wrap finished with a yellow bow, Height +-10cm.', 'shopkeychain/Forgetmenot.png', NULL),
+    ('BMO Keychain',              'bmo-keychain',              'keychain', 20.00, 'A game-console character from Adventure time called BMO handmade crochet.', 'shopkeychain/BMOs.png', NULL),
+    ('Teddy and Lottie Keychain','teddy-lottie-keychain',     'keychain', 11.00, 'Teddy and Lottie, the character from Mr.Bean.', 'shopkeychain/Teddies.png', NULL),
+    ('Whale Keychain',            'whale-keychain',            'keychain',  6.00, 'A palm-sized blue whale with a white belly and a sweet little smile.', 'shopkeychain/Whales.png', NULL),
+    ('Teletubbies Figurine',      'teletubbies-figurine',      'figurine', 35.00, 'Inspired from children TV series called Teletubbies! Height +-25cm.', 'shopfigurine/Teletubbies.png', NULL),
+    ('Princess Aurora Figurine',  'princess-aurora-figurine',  'figurine', 40.00, 'inspired from animated Disney movie called Princess Aurora! Known for her cursed by maleficent to fall into an eternal sleep after pricking her finger on a spinning wheel that can awakened by true love''s kiss! Height +-25cm.', 'shopfigurine/PrincessAurora.png', NULL),
+    ('Rapunzel Figurine',         'rapunzel-figurine',         'figurine', 48.00, 'inspired from animated Disney Movie called Tangled! Known for her long magical hair that gotten kidnapped by Mother Gothel since she was a baby and locks her away in a hidden tower! Height +-25cm.', 'shopfigurine/Rapunzel.png', NULL),
+    ('Princess Ariel Mermaid Figurine', 'ariel-mermaid-figurine', 'figurine', 45.00, 'Inspired from an animated Disney movie called The Little Mermaid! A princess, daughter of King Triton and late Queen Athena in underwater kingdom of Atlantica. Height +-25cm.', 'shopfigurine/MermaidA.png', NULL),
+    ('Princess Tiana Figurine',   'princess-tiana-figurine',   'figurine', 45.00, 'Inspired from animated Disney movie called The Princess and the Frog. After marrying Prince Naveen, she transforms into a real princess and lift the frog curse!. Height +-25cm.', 'shopfigurine/Tiana.png', NULL),
+    ('Royal Brunei Armed Plushie','rbaf-plushie',              'plushie', 180.00, 'Challenging and expensive custom pieces for Bruneian Army lovers that reminds of them their family or army collectors! Height: +-45cm.', 'shopplushie/RBA.png', NULL),
+    ('Shaun and Bitzer Plushie',  'shaun-bitzer-plushie',      'plushie',  90.00, 'A cartoon inspired from Shaun The Sheep Series! Two bestfriends since childhood growing up on Mossy Bottom Farm. A commission or custom piece for special gift that reminded of their childhood show or their bestfriend. Height +-35cm.', 'shopplushie/ShawnTheSheep.png', NULL),
+    ('Crown Elephant Plushie',    'crown-elephant-plushie',    'plushie',  98.00, 'Amigurumi version inspired from a game called It Takes Two! A beloved toy princess character of Rose (main character) belongings. This gift can be perfect for toddlers and a fan of the inspired game! Height +-35cm.', 'shopplushie/Cutie.png', NULL),
+    ('Baby Elephant Plushie',     'baby-elephant-plushie',     'plushie',  95.00, 'Very popular piece in crafting communities that''s known for its pink overalls and a perfect gift for toddlers & newborns! Height 34cm.', 'shopplushie/BabyElephant.png', NULL),
+    ('Appa Bison Plushie',        'appa-bison-plushie',        'plushie',  50.00, 'A cartoon inspired from Avatar: The Last Airbender! A longlife companion of Avatar Aang, the main protagonist of the series. Those who is a fan of avatar and wants their own companion too would love this! +-35cm.', 'shopplushie/Appa.png', NULL),
+    ('Elephant Car Hanger',       'elephant-car-hanger',       'accessory',13.00, 'A tiny grey elephant crochet sitting on a leaf swing with a cream flower.! +-10', 'shopacc/ElephantHang.png', NULL),
+    ('Patrick Car Hanger',        'patrick-car-hanger',        'accessory',15.00, 'A smiling Patrick hanging from a matching pink cord that can be hanged in your car, +-10.', 'shopacc/PatrickHang.png', NULL),
+    ('Sunflower Pouch',           'sunflower-pouch',           'accessory',12.00, 'A mini Sunflower pouch that you can use to keep your coins, earbuds, charger and more.', 'shopacc/Sunflowerpouch.png', NULL),
+    ('Stitch Pouch',              'stitch-pouch',              'accessory',20.00, 'A cute Stitch pouch that you can use to keep your coins, earbuds, keys, and other small essentials.', 'shopacc/Stitch.png', NULL),
+    ('Bracelet',                  'bracelet',                  'accessory', 7.00, 'A pair of handmade crochet bands with little bows in two shades of pinks.', 'shopacc/Bracelets.png', NULL);
 
 -- ---------------------------------------------------------
---  SAMPLE PRODUCT DESIGNS
---  Assorted Flowers Keychain has TWO designs (Pink & Blue).
---  PRODUCT PHOTO: replace the image_path values with your own
---  design photos stored inside the project "photos" folder.
---  To add a design to any product, copy a row and change
---  product_id, name and image_path.
+--  PRODUCT DESIGNS (variants)
+--  Only FIVE products have multiple designs:
+--    BMO Keychain            -> Pink, Blue
+--    Teddy and Lottie       -> Teddy, Lottie
+--    Whale Keychain         -> Pink, Blue
+--    Teletubbies Figurine   -> Po, Laa-Laa, Dipsy, Tinky Winky
+--    Shaun and Bitzer       -> Shaun, Bitzer
+--  Every other product is single-design: its "Other Design"
+--  section hides automatically.
+--
+--  No separate design photos exist yet, so each variant keeps
+--  the product's main image. When real design photos are added,
+--  update product_variants.image_path - the product page will
+--  then swap the main image automatically.
 -- ---------------------------------------------------------
-INSERT INTO product_variants (product_id, name, color, image_path, price, sort_order)
-SELECT p.id, v.name, v.color, v.image_path, v.price, v.sort_order
+-- 1) Soft-retire every existing variant so stale designs from
+--    older imports can never leak onto the shop.
+UPDATE product_variants SET is_active = 0;
+
+-- 2) Reactivate + sync the approved designs (matches by slug+name).
+UPDATE product_variants pv
+JOIN products p ON p.id = pv.product_id
+JOIN (
+    SELECT 'bmo-keychain' AS slug, 'Pink' AS name, '#ffb6c1' AS color, 'shopkeychain/BMOs.png' AS image_path, NULL AS price, 1 AS sort_order
+    UNION ALL SELECT 'bmo-keychain', 'Blue', '#aec6cf', 'shopkeychain/BMOs.png', NULL, 2
+    UNION ALL SELECT 'teddy-lottie-keychain', 'Teddy', '#b08968', 'shopkeychain/Teddies.png', NULL, 1
+    UNION ALL SELECT 'teddy-lottie-keychain', 'Lottie', '#e6ccb2', 'shopkeychain/Teddies.png', NULL, 2
+    UNION ALL SELECT 'whale-keychain', 'Pink', '#ffb6c1', 'shopkeychain/Whales.png', NULL, 1
+    UNION ALL SELECT 'whale-keychain', 'Blue', '#aec6cf', 'shopkeychain/Whales.png', NULL, 2
+    UNION ALL SELECT 'teletubbies-figurine', 'Po', '#e74c3c', 'shopfigurine/Teletubbies.png', NULL, 1
+    UNION ALL SELECT 'teletubbies-figurine', 'Laa-Laa', '#f1c40f', 'shopfigurine/Teletubbies.png', NULL, 2
+    UNION ALL SELECT 'teletubbies-figurine', 'Dipsy', '#2ecc71', 'shopfigurine/Teletubbies.png', NULL, 3
+    UNION ALL SELECT 'teletubbies-figurine', 'Tinky Winky', '#9b59b6', 'shopfigurine/Teletubbies.png', NULL, 4
+    UNION ALL SELECT 'shaun-bitzer-plushie', 'Shaun', '#ecf0f1', 'shopplushie/ShawnTheSheep.png', NULL, 1
+    UNION ALL SELECT 'shaun-bitzer-plushie', 'Bitzer', '#8b5a2b', 'shopplushie/ShawnTheSheep.png', NULL, 2
+) v ON v.slug = p.slug AND v.name = pv.name
+SET pv.is_active = 1, pv.color = v.color, pv.image_path = v.image_path, pv.price = v.price, pv.sort_order = v.sort_order;
+
+-- 3) Insert approved designs that are missing entirely.
+INSERT INTO product_variants (product_id, name, color, image_path, price, sort_order, is_active)
+SELECT p.id, v.name, v.color, v.image_path, v.price, v.sort_order, 1
 FROM products p
 JOIN (
-    SELECT 'assorted-flowers-keychain' AS slug, 'Pink'  AS name, '#ffb6c1' AS color, 'photos/designs.png'    AS image_path, NULL AS price, 1 AS sort_order
-    UNION ALL
-    SELECT 'assorted-flowers-keychain', 'Blue', '#aec6cf', 'photos/blue-yarn.png', NULL, 2
+    SELECT 'bmo-keychain' AS slug, 'Pink' AS name, '#ffb6c1' AS color, 'shopkeychain/BMOs.png' AS image_path, NULL AS price, 1 AS sort_order
+    UNION ALL SELECT 'bmo-keychain', 'Blue', '#aec6cf', 'shopkeychain/BMOs.png', NULL, 2
+    UNION ALL SELECT 'teddy-lottie-keychain', 'Teddy', '#b08968', 'shopkeychain/Teddies.png', NULL, 1
+    UNION ALL SELECT 'teddy-lottie-keychain', 'Lottie', '#e6ccb2', 'shopkeychain/Teddies.png', NULL, 2
+    UNION ALL SELECT 'whale-keychain', 'Pink', '#ffb6c1', 'shopkeychain/Whales.png', NULL, 1
+    UNION ALL SELECT 'whale-keychain', 'Blue', '#aec6cf', 'shopkeychain/Whales.png', NULL, 2
+    UNION ALL SELECT 'teletubbies-figurine', 'Po', '#e74c3c', 'shopfigurine/Teletubbies.png', NULL, 1
+    UNION ALL SELECT 'teletubbies-figurine', 'Laa-Laa', '#f1c40f', 'shopfigurine/Teletubbies.png', NULL, 2
+    UNION ALL SELECT 'teletubbies-figurine', 'Dipsy', '#2ecc71', 'shopfigurine/Teletubbies.png', NULL, 3
+    UNION ALL SELECT 'teletubbies-figurine', 'Tinky Winky', '#9b59b6', 'shopfigurine/Teletubbies.png', NULL, 4
+    UNION ALL SELECT 'shaun-bitzer-plushie', 'Shaun', '#ecf0f1', 'shopplushie/ShawnTheSheep.png', NULL, 1
+    UNION ALL SELECT 'shaun-bitzer-plushie', 'Bitzer', '#8b5a2b', 'shopplushie/ShawnTheSheep.png', NULL, 2
 ) v ON v.slug = p.slug
 WHERE NOT EXISTS (
-    SELECT 1 FROM product_variants pv WHERE pv.product_id = p.id
+    SELECT 1 FROM product_variants pv WHERE pv.product_id = p.id AND pv.name = v.name
 );
+
+-- ---------------------------------------------------------
+--  CLEANUP: remove the old sample keychain product.
+--  Only the unwanted sample row is deleted - the five
+--  approved keychains and all other products are kept.
+--  order_items.product_id is ON DELETE SET NULL so past
+--  orders keep their history.
+-- ---------------------------------------------------------
+DELETE FROM products WHERE slug = 'sample-crochet-keychain';
+
+-- ---------------------------------------------------------
+--  UPGRADES FOR DATABASES IMPORTED FROM AN OLDER VERSION
+--  (IF NOT EXISTS guards require MariaDB, e.g. XAMPP)
+-- ---------------------------------------------------------
+ALTER TABLE orders  ADD COLUMN IF NOT EXISTS notes TEXT NULL COMMENT 'Order notes written by the customer on the cart page' AFTER shipping_zone;
+ALTER TABLE reviews ADD COLUMN IF NOT EXISTS user_id INT UNSIGNED NULL COMMENT 'Logged-in customer who wrote the review (NULL = guest)' AFTER id;
+ALTER TABLE reviews ADD KEY IF NOT EXISTS idx_reviews_user (user_id);
+-- NOTE: the fk_reviews_user foreign key is created automatically on fresh
+-- installs by CREATE TABLE above. For databases imported from an older
+-- version, add it once manually if needed:
+--   ALTER TABLE reviews ADD CONSTRAINT fk_reviews_user
+--       FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL;

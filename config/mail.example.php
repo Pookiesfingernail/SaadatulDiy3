@@ -10,8 +10,12 @@ declare(strict_types=1);
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_PORT', 465);
 define('SMTP_SECURE', 'ssl');
-define('SMTP_USER', 'Saadatul.Art2@gmail.com');
-define('SMTP_PASS', 'xxxx xxxx xxxx xxxx'); // Gmail App Password
-define('MAIL_FROM', 'Saadatul.Art2@gmail.com');
+define('SMTP_USER', 'saadatul.art2@gmail.com');
+define('SMTP_PASS', 'F@mB32026saadatuldiy'); // Gmail App Password - 16 chars, no spaces
+define('MAIL_FROM', 'saadatul.art2@gmail.com');
 define('MAIL_FROM_NAME', "Sa'adatul D.I.Y");
-define('ORDER_NOTIFY_EMAIL', 'Saadatul.Art2@gmail.com');
+
+// Optional: public site URL for "view photo" links in emails.
+define('SITE_URL', '');
+
+define('ORDER_NOTIFY_EMAIL', 'saadatul.art2@gmail.com');

@@ -426,14 +426,14 @@ async function loadProduct() {
 
     try {
 
-        let id = new URLSearchParams(
-            window.location.search
-        ).get("id");
+        const params = new URLSearchParams(window.location.search);
+        let id = params.get("id");
+        const slug = params.get("slug");
 
-        // If no product ID is provided,
+        // If no product ID/slug is provided,
         // load the first available product.
 
-        if (!id) {
+        if (!id && !slug) {
 
             const response = await SDIY.api("products.php");
 
@@ -448,9 +448,11 @@ async function loadProduct() {
             id = products[0].id;
         }
 
-        // Retrieve the selected product.
+        // Retrieve the selected product (by slug or id).
         const data = await SDIY.api(
-            "products.php?id=" + encodeURIComponent(id)
+            slug
+                ? "products.php?slug=" + encodeURIComponent(slug)
+                : "products.php?id=" + encodeURIComponent(id)
         );
 
         renderProduct(data);

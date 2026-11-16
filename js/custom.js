@@ -433,13 +433,26 @@ function closeCustomModal() {
     document.getElementById("customModal").style.display = "none";
 }
 
+let isAddingToCart = false;
+
 async function addToCart() {
-    document.getElementById("customModal").style.display = "none";
+    // One click = one custom order. Ignore repeat clicks while
+    // the request is still running.
+    if (isAddingToCart) return;
+    isAddingToCart = true;
+
+    const modal = document.getElementById("customModal");
+    const modalAddButton = document.getElementById("modalAddToCart");
+    if (modalAddButton) modalAddButton.disabled = true;
+    confirmButton.disabled = true;
 
     const user = await SDIY.requireLogin("Please log in or sign up to submit your custom order.");
-    if (!user) return;
-
-    confirmButton.disabled = true;
+    if (!user) {
+        isAddingToCart = false;
+        if (modalAddButton) modalAddButton.disabled = false;
+        confirmButton.disabled = false;
+        return;
+    }
 
     try {
         // Send the choices as JSON plus the reference photos as files.
@@ -468,17 +481,26 @@ async function addToCart() {
         SDIY.setCartCount(result.count);
         sessionStorage.removeItem(DRAFT_KEY);
 
+        // Close the popup only after the order was saved, then
+        // stay on this page - the customer opens the cart
+        // manually through the navigation bag icon.
+        modal.style.display = "none";
+
         SDIY.toast(
             "Custom order added to your cart! Estimated total: BND $" +
             result.estimatedTotal.toFixed(2) +
             " - final price is confirmed on WhatsApp."
         );
 
-        // Go to the cart so the customer can check out or keep shopping.
-        window.location.href = "cart.html";
-
     } catch (error) {
-        alert(error.message);
+        // Keep the customer on the page and let them retry or
+        // keep editing. Close the popup so the error toast
+        // (which sits under the modal layer) stays visible.
+        modal.style.display = "none";
+        SDIY.toast(error.message, "error");
+    } finally {
+        isAddingToCart = false;
+        if (modalAddButton) modalAddButton.disabled = false;
         confirmButton.disabled = false;
     }
 }

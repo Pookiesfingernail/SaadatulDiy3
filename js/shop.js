@@ -4,6 +4,7 @@ const shopContainer = document.querySelector('.shop-container');
 const filterButtons = document.querySelectorAll('.filter-btn');
 const categorySections = document.querySelectorAll('.category-section');
 const searchTerm = new URLSearchParams(window.location.search).get('search') || '';
+const categoryParam = new URLSearchParams(window.location.search).get('category') || '';
 
 // --- PRODUCT CARD ---
 function productCard(product) {
@@ -35,12 +36,17 @@ function productCard(product) {
 }
 
 function setHeart(button, isFavourite) {
-    const icon = button.querySelector('i');
     button.classList.toggle('active', isFavourite);
     button.setAttribute('aria-pressed', String(isFavourite));
     button.setAttribute('aria-label', isFavourite ? 'Remove from favourites' : 'Add to favourites');
-    icon.classList.toggle('fa-solid', isFavourite);
-    icon.classList.toggle('fa-regular', !isFavourite);
+
+    // The Font Awesome kit replaces <i> tags with <svg>, so the icon may
+    // be either element (or missing). Rebuild it so the solid/regular
+    // heart swaps correctly; FA converts the new <i> automatically.
+    const icon = button.querySelector('i, svg');
+    if (icon) {
+        icon.outerHTML = `<i class="${isFavourite ? 'fa-solid' : 'fa-regular'} fa-heart"></i>`;
+    }
 }
 
 // --- LOAD PRODUCTS ---
@@ -78,7 +84,15 @@ async function loadProducts() {
                 : `No products found for "<strong>${SDIY.escapeHtml(searchTerm)}</strong>". <a href="shop.html">Show all products</a>`;
         }
 
-        applyFilter('all');
+        // Deep links like shop.html?category=keychain open that category.
+        const validCategories = ['keychain', 'figurine', 'plushie', 'accessory'];
+        const initial = !searchTerm && validCategories.includes(categoryParam) ? categoryParam : 'all';
+        applyFilter(initial);
+
+        if (initial !== 'all') {
+            const section = document.getElementById('section-' + initial);
+            if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     } catch (error) {
         SDIY.toast(error.message, 'error');
     }

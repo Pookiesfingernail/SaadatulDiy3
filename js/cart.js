@@ -9,6 +9,21 @@ const cartItemCount = document.getElementById("cartItemCount");
 const cartSubtotal = document.getElementById("cartSubtotal");
 const cartTotal = document.getElementById("cartTotal");
 const checkoutButton = document.getElementById("checkoutButton");
+const orderNotesInput = document.getElementById("orderNotes");
+const ORDER_NOTES_KEY = "sdiyOrderNotes";
+
+// Order notes are kept in the browser and sent with the order at checkout.
+if (orderNotesInput) {
+    try {
+        orderNotesInput.value = localStorage.getItem(ORDER_NOTES_KEY) || "";
+    } catch (error) { /* storage unavailable - notes just won't persist */ }
+
+    orderNotesInput.addEventListener("input", () => {
+        try {
+            localStorage.setItem(ORDER_NOTES_KEY, orderNotesInput.value);
+        } catch (error) { /* ignore */ }
+    });
+}
 
 function renderCart(cart) {
 

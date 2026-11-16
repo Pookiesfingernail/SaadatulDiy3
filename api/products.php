@@ -3,6 +3,7 @@
  * PRODUCTS - GET
  *   api/products.php                 all products (optional ?category=keychain, ?search=word)
  *   api/products.php?id=2            one product + designs (variants) + gallery + other designs
+ *   api/products.php?slug=rbaf-plushie   same, looked up by slug
  */
 
 declare(strict_types=1);
@@ -35,9 +36,19 @@ function product_variants(int $productId): array
 }
 
 // ---------- Single product ----------
-if (isset($_GET['id'])) {
-    $productId = positive_int($_GET['id']);
-    $row = $productId ? find_active_product($productId) : null;
+$slug = clean_text($_GET['slug'] ?? '');
+if (isset($_GET['id']) || $slug !== '') {
+    $productId = positive_int($_GET['id'] ?? 0);
+    if ($slug !== '') {
+        $stmt = $pdo->prepare('SELECT * FROM products WHERE slug = ? AND is_active = 1');
+        $stmt->execute([$slug]);
+        $row = $stmt->fetch() ?: null;
+    } else {
+        $row = $productId ? find_active_product($productId) : null;
+    }
+    if ($row) {
+        $productId = (int) $row['id'];
+    }
 
     if (!$row) {
         json_error('Product not found.', 404);
@@ -83,13 +94,10 @@ if ($category !== '' && in_array($category, PRODUCT_CATEGORIES, true)) {
 
 $search = clean_text($_GET['search'] ?? '');
 if ($search !== '') {
-    // Matches product name, description, category AND design names/colours.
+    // Search matches the product name only.
     $like = '%' . addcslashes($search, '%_\\') . '%';
-    $where[] = '(name LIKE ? OR description LIKE ? OR category LIKE ?
-        OR EXISTS (SELECT 1 FROM product_variants pv
-                   WHERE pv.product_id = products.id AND pv.is_active = 1
-                     AND (pv.name LIKE ? OR pv.color LIKE ?)))';
-    array_push($params, $like, $like, $like, $like, $like);
+    $where[] = 'name LIKE ?';
+    $params[] = $like;
 }
 
 $stmt = $pdo->prepare(
