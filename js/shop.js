@@ -1,13 +1,11 @@
-/* SHOP PAGE - SA'ADATUL D.I.Y
-   Products are loaded from the database (api/products.php).
-   The heart button saves favourites to the customer's account. */
+/* SHOP PAGE - SA'ADATUL D.I.Y */
 
 const shopContainer = document.querySelector('.shop-container');
 const filterButtons = document.querySelectorAll('.filter-btn');
 const categorySections = document.querySelectorAll('.category-section');
 const searchTerm = new URLSearchParams(window.location.search).get('search') || '';
 
-// --- PRODUCT CARD (same design as before) ---
+// --- PRODUCT CARD ---
 function productCard(product) {
     const name = SDIY.escapeHtml(product.name);
 
@@ -38,7 +36,6 @@ function productCard(product) {
 
 function setHeart(button, isFavourite) {
     const icon = button.querySelector('i');
-
     button.classList.toggle('active', isFavourite);
     button.setAttribute('aria-pressed', String(isFavourite));
     button.setAttribute('aria-label', isFavourite ? 'Remove from favourites' : 'Add to favourites');
@@ -46,7 +43,7 @@ function setHeart(button, isFavourite) {
     icon.classList.toggle('fa-regular', !isFavourite);
 }
 
-// --- LOAD PRODUCTS FROM DATABASE ---
+// --- LOAD PRODUCTS ---
 async function loadProducts() {
     try {
         const query = searchTerm ? '?search=' + encodeURIComponent(searchTerm) : '';
@@ -81,14 +78,13 @@ async function loadProducts() {
                 : `No products found for "<strong>${SDIY.escapeHtml(searchTerm)}</strong>". <a href="shop.html">Show all products</a>`;
         }
 
-        // Apply the 5-per-category limit (skipped automatically while searching).
         applyFilter('all');
     } catch (error) {
         SDIY.toast(error.message, 'error');
     }
 }
 
-// --- FAVOURITES / HEART BUTTON FUNCTIONALITY ---
+// --- FAVOURITES ---
 shopContainer.addEventListener('click', async function (e) {
     const button = e.target.closest('.wishlist-btn');
     if (!button) return;
@@ -115,10 +111,6 @@ shopContainer.addEventListener('click', async function (e) {
 });
 
 // --- CATEGORY FILTERING ---
-// In the "All" view each category shows at most 5 products.
-// "View all" expands ONLY that category (inline, other categories
-// keep their 5) and turns into "Show less". Clicking the "All"
-// filter button again collapses everything back to 5.
 const MAX_VISIBLE_PRODUCTS = 5;
 const expandedCategories = new Set();
 let currentFilter = 'all';
@@ -126,51 +118,55 @@ let currentFilter = 'all';
 function applyFilter(filterValue) {
     currentFilter = filterValue;
 
+    // Update the active state of the top buttons
     filterButtons.forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-filter') === filterValue);
     });
 
+    // Show/Hide the sections
     categorySections.forEach(section => {
         const category = section.id.replace('section-', '');
         const show = filterValue === 'all' || category === filterValue;
         section.style.display = show ? 'block' : 'none';
+        
         if (!show) return;
 
         const cards = section.querySelectorAll('.product-card');
         const viewAllBtn = section.querySelector('.view-all');
-        const expanded = expandedCategories.has(category);
-
+        
         if (filterValue === 'all' && !searchTerm) {
-            // Default: first 5 only. Expanded: every product in the category.
+            const expanded = expandedCategories.has(category);
             let visible = 0;
+            
             cards.forEach(card => {
                 const showCard = expanded || visible < MAX_VISIBLE_PRODUCTS;
                 card.style.display = showCard ? 'flex' : 'none';
                 if (visible < MAX_VISIBLE_PRODUCTS || expanded) visible++;
             });
+            
             if (viewAllBtn) {
-                const hasMore = cards.length > MAX_VISIBLE_PRODUCTS;
-                viewAllBtn.style.display = hasMore ? 'inline-block' : 'none';
+                viewAllBtn.style.display = 'inline-block';
                 viewAllBtn.textContent = expanded ? 'Show less' : 'View all';
             }
         } else {
-            // A single-category filter (or search) shows everything.
+
             cards.forEach(card => { card.style.display = 'flex'; });
+
             if (viewAllBtn) viewAllBtn.style.display = 'none';
         }
     });
 }
 
+// Top Filter Buttons Click 
 filterButtons.forEach(button => {
     button.addEventListener('click', function () {
         const value = this.getAttribute('data-filter');
-        // Selecting "All" again returns every category to 5 products.
         if (value === 'all') expandedCategories.clear();
         applyFilter(value);
     });
 });
 
-// "View all" / "Show less" expands or collapses ONLY that category.
+// "View All"  
 categorySections.forEach(section => {
     const viewAll = section.querySelector('.view-all');
     if (!viewAll) return;
@@ -179,17 +175,19 @@ categorySections.forEach(section => {
         e.preventDefault();
         const category = section.id.replace('section-', '');
 
-        if (expandedCategories.has(category)) {
-            expandedCategories.delete(category);
+
+        if (currentFilter === 'all') {
+            applyFilter(category);
         } else {
-            expandedCategories.add(category);
+
+            if (expandedCategories.has(category)) {
+                expandedCategories.delete(category);
+            } else {
+                expandedCategories.add(category);
+            }
+            applyFilter(category);
         }
 
-        // In the "All" view the section expands in place; in a
-        // single-category view everything is already visible.
-        if (currentFilter === 'all' && !searchTerm) {
-            applyFilter('all');
-        }
         window.scrollTo({ top: shopContainer.offsetTop - 20, behavior: 'smooth' });
     });
 });
