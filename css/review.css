@@ -2,7 +2,7 @@
    REVIEW PAGE SPECIFIC STYLES
    ========================================= */
 
-/* --- 1. FORCE INTER FONT --- */
+/* ---  INTER FONT --- */
 body, 
 .review-banner, 
 .review-card, 
@@ -14,7 +14,7 @@ textarea {
     font-family: 'Inter', sans-serif !important;
 }
 
-/* --- 2. KILL THE LINES UNDER THE LOGO --- */
+/* --- LOGO --- */
 header a::after,
 .logo-link::after,
 header .logo-container::after {
@@ -30,7 +30,7 @@ header a,
     border-bottom: none !important;
 }
 
-/* --- 3. THE PURPLE BANNER --- */
+/* --- PURPLE BANNER --- */
 .review-banner {
     background: #ded3e9 !important; 
     background-image: none !important; 
@@ -57,7 +57,7 @@ header a,
     text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* --- 4. MAIN LAYOUT --- */
+/* --- MAIN LAYOUT --- */
 .review-container {
     max-width: 1050px;
     margin: 0 auto 60px;
@@ -86,7 +86,7 @@ header a,
     color: #263e78;
 }
 
-/* --- 5. SOLID BLUE & YELLOW STARS --- */
+/* --- SOLID BLUE & YELLOW STARS --- */
 .stars {
     display: flex;
     gap: 5px;
@@ -122,12 +122,11 @@ header a,
 }
 
 .review-photo {
-    width: 42%;
-    max-width: 150px;
-    aspect-ratio: 1 / 1;
-    flex-shrink: 0;
+    width: 120px;  
+    height: 120px;    
+    flex-shrink: 0;   
     border-radius: 5px;
-    object-fit: cover;
+    object-fit: cover; 
 }
 
 .placeholder-photo {
@@ -154,7 +153,36 @@ header a,
     color: #7b849e;
 }
 
-/* --- 6. THE REVIEW FORM --- */
+/* --- Delete Review Button --- */
+.review-card {
+    position: relative; /* Needed to position the X button */
+}
+
+.delete-review-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.delete-review-btn:hover {
+    background: #c0392b;
+    transform: scale(1.1);
+}
+
+/* --- REVIEW FORM --- */
 .review-form-section {
     margin-top: 35px;
     background: #f2f0fb;
@@ -219,7 +247,7 @@ header a,
     outline: 2px solid #b9a5d8;
 }
 
-/* --- 7. FORM STAR RATING --- */
+/* --- FORM STAR RATING --- */
 .rating-input {
     display: flex;
     flex-direction: row-reverse;

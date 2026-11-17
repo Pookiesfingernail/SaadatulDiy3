@@ -54,7 +54,13 @@ function createFigurineForm(item, index) {
         return true;
     });
 
-    return `
+        return `
+        <!-- ADD THIS BLOCK HERE -->
+        <div class="section-heading">
+            <span class="number">#${index + 1}</span>
+            <h2>Figurine Customisation</h2>
+        </div>
+        
         <section class="form-section figurine-card">
             <label>CHOOSE DOLL GENDER (Fixed Size 16cm - 22cm)</label>
             <div class="gender-options">

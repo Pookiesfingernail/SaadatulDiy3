@@ -6,6 +6,7 @@
     <title>Checkout | Sa’adatulDIY</title>
     
     <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="css/global.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Delicious+Handrawn&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -38,7 +39,7 @@
 
             <h1>Order Information</h1>
 
-<form id="checkoutForm">
+<form id="checkoutForm" onsubmit="return false;">
 
     <label for="email">Email address *</label>
     <input type="email" id="email" placeholder="example@gmail.com" required>
@@ -162,7 +163,7 @@
         </div>
     </div>
 
-    <button class="place-order mobile-place" type="submit">Place Order</button>
+    <button class="place-order mobile-place" type="button" onclick="submitOrder()">Place Order</button>
 </form>
         </section>
 
@@ -175,7 +176,6 @@
 
             <div class="product" id="emptyOrder" hidden>
                 <div class="product-info">
-                    <p>Your cart is empty.<br>Add items from the Shop page first.</p>
                 </div>
             </div>
 
@@ -195,37 +195,44 @@
                 <strong>BND <span id="total">0.00</span></strong>
             </div>
 
-            <button class="place-order desktop-place" type="submit" form="checkoutForm">Place Order</button>
+           <button class="place-order desktop-place" type="button" onclick="submitOrder()">Place Order</button>
             <a href="cart.html" class="back-button">Back to Cart</a>
         </aside>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-column">
-            <strong>Sa’adatulDIY</strong>
-            <a href="tel:+6738282379">+673 828 2379</a>
-            <a href="mailto:Saadatul.Art@gmail.com">Saadatul.Art@gmail.com</a>
-        </div>
-        <div class="footer-column">
-            <strong>Our cube has Instocks:</strong>
-            <span>Box of Cravings, Madang</span>
-            <span>(B53)</span>
-        </div>
-        <div class="footer-column reviews">
-            <a href="#">Reach us Out!</a>
-            <a href="#">See Our Reviews</a>
-            <div class="socials">
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+    <!--Footer-->
+      <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Sa'adatul.D.I.Y Contact</h3>
+                <p>Phone:<br>+673 828 2379</p>
+                <p>Email: Saadatul.Art@gmail.com</p>
+                <h3>Cube Address (instocks)</h3>
+                <p>Box Of Cravings, Madang (B53)</p>
+            </div>
+            <div class="footer-content">
+                <h3>Quick Links</h3>
+                <ul class="List">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="review.html">Reviews</a></li>
+                </ul>
+            </div>
+            <div class="footer-content">
+                <h3>Stay Updated</h3>
+                <ul class="List">
+                <li><a href="https://www.instagram.com/saadatuldiy/"><i class="fa-brands fa-instagram fa-2xl insta-icon"></i></a></li>
+                <li><a href="https://www.tiktok.com/@saadatuldiy"><i class="fa-brands fa-tiktok fa-2xl tiktok-icon"></i></a></li>
+                </ul>
             </div>
         </div>
-        <p class="copyright">©2026, Sa’adatulDIY. All rights Reserved</p>
+        <div class="bottom-bar">
+            <p>&copy;2026, Sa'adatulD.I.Y. All rights reserved. </p>
+        </div>
     </footer>
-
-    <script src="js/global.js"></script>
-    <script src="js/checkout.js?v=2"></script>
 
     <!-- CHECKOUT SUCCESS MODAL -->
 <div id="successModal" class="modal-overlay">
@@ -260,6 +267,9 @@
         </a>
     </div>
 </div>
+
+<script src="js/global.js"></script>
+<script src="js/checkout.js?v=4"></script>
 
 </body>
 </html>

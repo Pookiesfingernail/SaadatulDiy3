@@ -1,7 +1,4 @@
-/* CHECKOUT PAGE - SA'ADATUL D.I.Y
-   Shows the customer's saved cart (normal products + custom orders)
-   and sends the order + payment screenshot to api/checkout.php.
-   Login required. Prices are always recalculated on the server. */
+/* CHECKOUT PAGE - SA'ADATUL D.I.Y */
 
 // Product subtotal (loaded from the cart)
 let subtotal = 0;
@@ -9,9 +6,7 @@ let cartItems = [];
 let fulfilment = "delivery";
 
 // ---------- ELEMENTS ----------
-const checkoutForm = document.getElementById("checkoutForm");
 const placeOrderButtons = document.querySelectorAll(".place-order");
-
 const shippingRadios = document.querySelectorAll('input[name="shipping"]');
 const subtotalText = document.getElementById("subtotal");
 const deliveryFeeText = document.getElementById("deliveryFee");
@@ -58,10 +53,8 @@ document.querySelectorAll(".switch-option").forEach(button => {
     });
 });
 
-// ---------- BRUNEI PHONE (+673 fixed prefix, 7 digits only) ----------
-// Called from the input's oninput attribute in checkout.html.
+// ---------- BRUNEI PHONE ----------
 function enforceBruneiPhone(input) {
-    // Keep digits only, maximum 7 local digits after the +673 prefix.
     input.value = input.value.replace(/\D/g, "").slice(0, 7);
 }
 
@@ -70,7 +63,6 @@ document.getElementById("proof").addEventListener("change", event => {
     const file = event.target.files[0];
     document.getElementById("fileName").textContent = file ? file.name : "No file selected";
 
-    // If a file is selected, remove the red error
     if (file) {
         document.getElementById("fileError").style.display = "none";
         document.querySelector(".upload-button").classList.remove("error");
@@ -117,7 +109,6 @@ function prefill(user) {
         if (!input || !value) return;
 
         if (id === "phone") {
-            // Keep only the 7 local digits inside the +673 field.
             const digits = String(value).replace(/\D/g, "");
             input.value = digits.length === 10 && digits.startsWith("673")
                 ? digits.slice(3)
@@ -128,10 +119,11 @@ function prefill(user) {
     });
 }
 
-// ---------- SUBMIT ORDER ----------
-checkoutForm.addEventListener("submit", async event => {
-    event.preventDefault();
-    const form = event.currentTarget;
+// ==========================================
+// SUBMIT ORDER (This is the function we call)
+// ==========================================
+async function submitOrder() {
+    const form = document.getElementById("checkoutForm");
 
     if (cartItems.length === 0) {
         SDIY.toast("Your cart is empty. Please add items from the Shop page.", "error");
@@ -157,10 +149,10 @@ checkoutForm.addEventListener("submit", async event => {
         return;
     }
 
-    // Brunei phone check before sending (server checks again).
+    // Brunei phone check
     const phoneDigits = document.getElementById("phone").value.replace(/\D/g, "");
     if (phoneDigits.length !== 7) {
-        SDIY.toast("Please enter a valid Brunei phone number (7 digits after +673).", "error");
+        SDIY.toast("Please enter a valid Brunei phone number (7 digits).", "error");
         document.getElementById("phone").focus();
         return;
     }
@@ -170,7 +162,6 @@ checkoutForm.addEventListener("submit", async event => {
 
     data.append("email", document.getElementById("email").value.trim());
     data.append("full_name", document.getElementById("fullname").value.trim());
-    // Send the full international number: +673 + 7 digits.
     data.append("phone", "+673" + phoneDigits);
     data.append("country", document.getElementById("country").value.trim());
     data.append("fulfilment", fulfilment);
@@ -180,11 +171,10 @@ checkoutForm.addEventListener("submit", async event => {
     data.append("shipping", selected ? selected.value : "");
     data.append("proof", proof);
 
-    // Optional order notes written on the cart page.
     try {
         const notes = (localStorage.getItem("sdiyOrderNotes") || "").trim();
         if (notes) data.append("notes", notes);
-    } catch (error) { /* storage unavailable - order goes without notes */ }
+    } catch (error) { }
 
     placeOrderButtons.forEach(button => { button.disabled = true; });
 
@@ -192,33 +182,45 @@ checkoutForm.addEventListener("submit", async event => {
         const result = await SDIY.api("checkout.php", { method: "POST", form: data });
 
         SDIY.setCartCount(0);
-        try { localStorage.removeItem("sdiyOrderNotes"); } catch (error) { /* ignore */ }
+        try { localStorage.removeItem("sdiyOrderNotes"); } catch (error) { }
 
-        // Show the real order number returned by the server.
-        // The confirmation stays on screen until the customer
-        // clicks "Back To Home" - no timer, no auto-redirect.
         const orderNumber = result.orderNumber || ("SD-" + String(result.orderId).padStart(5, "0"));
         document.getElementById("randomId").textContent = orderNumber.replace(/^SD-/, "");
         document.getElementById("confirmOrderNumber").textContent = orderNumber;
-        document.getElementById("confirmOrderStatus").textContent =
-            (result.status || "pending").replaceAll("_", " ");
-        document.getElementById("confirmPaymentStatus").textContent =
-            (result.paymentStatus === "verified" ? "Verified" : "Pending Verification");
+        document.getElementById("confirmOrderStatus").textContent = (result.status || "pending").replaceAll("_", " ");
+        document.getElementById("confirmPaymentStatus").textContent = (result.paymentStatus === "verified" ? "Verified" : "Pending Verification");
 
-        // Hide the form so the same order cannot be submitted again.
-        document.getElementById("checkoutForm").style.display = "none";
-        document.getElementById("successModal").style.display = "flex";
-        // Keep the Place Order buttons disabled - the order is done.
+
+// Hide the checkout form and order summary
+document.querySelector(".order-info").style.display = "none";
+document.querySelector(".summary-panel").style.display = "none";
+
+// Show success popup
+const modal = document.getElementById("successModal");
+
+modal.style.display = "flex";
+modal.style.position = "fixed";
+modal.style.inset = "0";
+modal.style.width = "100%";
+modal.style.height = "100%";
+modal.style.zIndex = "999999";
+modal.style.justifyContent = "center";
+modal.style.alignItems = "center";
+
+document.body.style.overflow = "hidden";
+
+console.log("SUCCESS MODAL DISPLAYED");
+console.log("Modal display:", getComputedStyle(modal).display);
+  
 
     } catch (error) {
         SDIY.toast(error.message, "error");
         placeOrderButtons.forEach(button => { button.disabled = cartItems.length === 0; });
     }
-});
+}
 
 // ---------- LOAD CART (login required) ----------
 async function loadCheckout() {
-
     placeOrderButtons.forEach(button => { button.disabled = true; });
 
     const user = await SDIY.requireLogin("Please log in or sign up to check out.");

@@ -2,47 +2,71 @@
    FORCE INTER FONT (EXCEPT LOGO)
    ========================================= */
 body, main, section, div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select, label {
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Inter', sans-serif;
 }
 
-.fancy-text, .fancy-text * { font-family: 'Dancing Script', cursive !important; }
-.cute-text, .cute-text * { font-family: 'Delicious Handrawn', cursive !important; }
-.fa-solid, .fa-regular, .fa-brands { font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important; }
+.fancy-text, .fancy-text * { font-family: 'Dancing Script', cursive; }
+.cute-text, .cute-text * { font-family: 'Delicious Handrawn', cursive; }
+.fa-solid, .fa-regular, .fa-brands { font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands"; }
 
 header a::after, .logo-link::after, header .logo-container::after {
-    display: none !important;
-    content: none !important;
-    background: transparent !important;
-    height: 0 !important;
+    display: none;
+    content: none;
+    background: transparent;
+    height: 0;
 }
 header a, .logo-link {
-    text-decoration: none !important;
-    border-bottom: none !important;
+    text-decoration: none;
+    border-bottom: none;
 }
 
 /* =========================================
    BANNER LAYOUT (Image on Right, Faded)
    ========================================= */
 .banner {
-    min-height: 320px;
+    display: flex;
+    align-items: stretch;
     margin: 40px 3% 0 3%;
     border-radius: 10px;
-    
-    /* Fades from left (solid) to right (transparent to reveal image) */
-    background: 
-        linear-gradient(90deg, #eef2fc 45%, rgba(238, 242, 252, 0) 100%),
-        url("../photos/keychain.jpg") right center / cover no-repeat;
-        
-    display: flex;
-    align-items: center;
-    padding: 40px 8%;
+    background-color: #eef2fc;
     overflow: hidden;
+    height: 320px; 
+}
+
+.banner-image-container {
+    flex: 0 0 40%;
+    position: relative;
+    background-color: #e3e8f5;
+    overflow: hidden; 
+}
+
+.banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* THE FADE EFFECT (Blends the left side of the image into the text) */
+.banner-image-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 120px; 
+    background: linear-gradient(to left, rgba(238, 242, 252, 0) 0%, #eef2fc 100%);
+    pointer-events: none;
 }
 
 .banner-content {
-    max-width: 500px;
+    flex: 1;
+    padding: 20px 8%; 
     text-align: center;
-    margin-right: auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .banner h1 {
@@ -57,13 +81,49 @@ header a, .logo-link {
     font-size: 15px;
     line-height: 1.6;
     color: #1c3169;
+    max-width: 500px;
 }
 
+/* --- NOTICE TEXT --- */
 .notice {
+    display: block;
+    width: 100%;
     text-align: center;
     font-size: 14px;
-    margin: 18px;
+    margin: 20px auto;
+    padding: 0 15px;
     color: #465b8b;
+}
+
+/* --- RESPONSIVE (Mobile View) --- */
+@media (max-width: 1000px) {
+    .banner { 
+        flex-direction: column; 
+        height: auto; 
+    }
+    
+    .banner-image-container { 
+        flex: 0 0 250px; 
+        width: 100%; 
+        order: -1; 
+    }
+    
+
+    .banner-image-container::after {
+        background: linear-gradient(to top, rgba(238, 242, 252, 0) 0%, #eef2fc 100%);
+        width: 100%;
+        height: 100px;
+        top: auto;
+        bottom: 0;
+        left: 0;
+    }
+}
+
+@media (max-width: 750px) {
+    .banner { margin: 0 12px; }
+    .banner-content { padding: 30px 20px; }
+    .banner h1 { font-size: 23px; }
+    .banner p { font-size: 14px; }
 }
 
 /* =========================================
@@ -144,8 +204,26 @@ header a, .logo-link {
 .accessory-name { flex: 1; }
 .accessory-price { font-weight: 600; white-space: nowrap; }
 
-.form-section textarea { width: 100%; min-height: 90px; resize: vertical; padding: 13px; border: 1px solid #c4c9e2; border-radius: 5px; outline: none; font-size: 15px; color: #465b8b; background: white; }
-.form-section textarea:focus { border-color: #a98ac5; }
+.form-section textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box; 
+    min-height: 120px;
+    resize: vertical;
+    padding: 15px;
+    border: 1px solid #c4c9e2;
+    border-radius: 5px;
+    outline: none;
+    font-size: 15px;
+    color: #465b8b;
+    background: white;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.form-section textarea:focus {
+    border-color: #a98ac5;
+}
 
 /* --- UPLOAD BOX STYLES --- */
 .reference-photo-box { 
@@ -190,7 +268,17 @@ header a, .logo-link {
 .summary-divider { border-top: 1px solid #deddec; margin: 18px 0; }
 .summary-total { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 17px; }
 .summary-total strong { color: #465b8b; font-size: 21px; white-space: nowrap; }
-.summary-disclaimer { font-size: 13px; color: #858ba2; margin: 14px 0; line-height: 1.6; }
+
+.summary-disclaimer {
+    background-color: #fdfae6;
+    border: 2px solid #e6d2b5; 
+    border-radius: 10px; 
+    padding: 15px; 
+    font-size: 14px; 
+    color: #1c3169;
+    margin: 20px 0;
+    line-height: 1.5;
+}
 
 .confirm-button { width: 100%; padding: 18px; background: #69c27c; border: none; border-radius: 6px; color: white; font-size: 18px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.2s; }
 .confirm-button:hover { background: #52aa67; }
@@ -250,6 +338,7 @@ header a, .logo-link {
     .footer { grid-template-columns: 1fr; padding: 30px 22px; gap: 20px; font-size: 14px; }
     .copyright { text-align: left; font-size: 12px; }
 }
+
 /* --- REQUIRED UPLOAD ERROR TEXT --- */
 .field-error {
     color: #e74c3c;

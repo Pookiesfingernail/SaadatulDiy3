@@ -304,6 +304,7 @@ nav {
 .bottom-section {
     background-color: #b39bdc47;
 }
+
 /* --- Brunei phone input: fixed grey +673 prefix --- */
 .phone-input-group {
     display: flex;
@@ -321,6 +322,7 @@ nav {
     border-radius: 4px 0 0 4px;
     font-weight: 600;
     user-select: none;
+    font-family: 'Inter', sans-serif;
 }
 .phone-input-group input {
     border-radius: 0 4px 4px 0;

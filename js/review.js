@@ -102,6 +102,27 @@ function buildReviewCard(review) {
     heading.textContent = review.customerName;
     card.appendChild(heading);
 
+    if (review.id) {
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "delete-review-btn";
+        deleteBtn.innerHTML = "&times;";
+        deleteBtn.title = "Delete this review";
+        deleteBtn.addEventListener("click", async () => {
+            if (confirm("Are you sure you want to delete this review?")) {
+                try {
+                    await SDIY.api("reviews.php", {
+                        method: "POST",
+                        body: { action: "delete", review_id: review.id }
+                    });
+                    card.remove(); // Removes it from the screen
+                } catch (error) {
+                    alert("Could not delete review: " + error.message);
+                }
+            }
+        });
+        card.appendChild(deleteBtn);
+    }
+
     const stars = document.createElement("div");
     stars.className = "stars";
     for (let i = 1; i <= 5; i++) {
@@ -118,14 +139,22 @@ function buildReviewCard(review) {
         ? review.images
         : (review.image ? [review.image] : []);
 
-    if (images.length) {
-        // Multiple photos: small thumbnails side by side.
+       if (images.length === 1) {
+        const photo = document.createElement("img");
+        photo.className = "review-photo";
+        photo.src = images[0];
+        photo.alt = "Customer's product";
+        photo.setAttribute("data-fallback", "");
+        photo.onerror = () => { photo.style.display = "none"; };
+        content.appendChild(photo);
+    } else if (images.length > 1) {
         const wrap = document.createElement("div");
         wrap.style.cssText = "display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0;";
         images.forEach(src => {
             const photo = document.createElement("img");
             photo.className = "review-photo";
-            photo.style.maxWidth = images.length > 1 ? "72px" : "";
+            photo.style.width = "72px";
+            photo.style.height = "72px";
             photo.src = src;
             photo.alt = "Customer's product";
             photo.setAttribute("data-fallback", "");

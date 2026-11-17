@@ -59,6 +59,11 @@ function createKeychainForm(item, index) {
     });
 
     return `
+            <div class="section-heading">
+            <span class="number">#${index + 1}</span>
+            <h2>Keychain Customisation</h2>
+        </div>
+
         <section class="form-section keychain-card">
             <label>CHOOSE DOLL GENDER (Fixed Size 12cm - 14cm)</label>
             <div class="gender-options">

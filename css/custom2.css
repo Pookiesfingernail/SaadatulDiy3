@@ -2,7 +2,7 @@
    FORCE INTER FONT (EXCEPT LOGO)
    ========================================= */
 body, main, section, div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select, label {
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Inter', sans-serif;
 }
 
 .fancy-text, .fancy-text * { font-family: 'Dancing Script', cursive !important; }
@@ -10,14 +10,14 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea,
 .fa-solid, .fa-regular, .fa-brands { font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important; }
 
 header a::after, .logo-link::after, header .logo-container::after {
-    display: none !important;
-    content: none !important;
-    background: transparent !important;
-    height: 0 !important;
+    display: none;
+    content: none;
+    background: transparent;
+    height: 0;
 }
 header a, .logo-link {
-    text-decoration: none !important;
-    border-bottom: none !important;
+    text-decoration: none;
+    border-bottom: none;
 }
 
 /* =========================================
@@ -141,20 +141,84 @@ header a, .logo-link {
     margin-bottom: 16px;
 }
 
-.form-section label { display: block; font-size: 15px; color: #77809c; margin-bottom: 9px; }
-.small-instruction { font-size: 14px; line-height: 1.7; color: #737d9a; margin: 12px 0; }
+.form-section label { 
+    display: block;
+    font-size: 15px;
+    color: #77809c;
+    margin-bottom: 9px; 
+}
 
-.gender-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.choice { background: white; border: 1px solid #c4c9e2; border-radius: 6px; padding: 17px 14px; cursor: pointer; color: #465b8b; text-align: left; font-size: 16px; transition: 0.2s; }
-.choice:hover { border-color: #a98ac5; background: #faf8ff; }
-.choice.selected { background: #e9e3f7; border: 2px solid #a98ac5; }
-.choice strong { display: block; font-size: 18px; }
-.choice small { display: block; color: #7b849e; font-size: 14px; margin-top: 5px; }
-.choice-price { color: #465b8b; font-weight: 600; float: right; }
+.small-instruction { 
+    font-size: 14px;
+    line-height: 1.7; 
+    color: #737d9a;
+    margin: 12px 0; 
+}
 
-.skin-options { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
-.skin-choice { width: 45px; height: 45px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 1px #c5c5d6; cursor: pointer; }
-.skin-choice.selected { box-shadow: 0 0 0 3px #a98ac5; }
+.gender-options {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 14px;
+}
+.choice { 
+    background: white; 
+    border: 1px solid #c4c9e2; 
+    border-radius: 6px; 
+    padding: 17px 14px; 
+    cursor: pointer; 
+    color: #465b8b; 
+    text-align: left; 
+    font-size: 16px; 
+    transition: 0.2s; 
+}
+
+.choice:hover { 
+    border-color: #a98ac5; 
+    background: #faf8ff; 
+}
+
+.choice.selected { 
+    background: #e9e3f7; 
+    border: 2px solid #a98ac5; 
+}
+
+.choice strong { 
+    display: block; 
+    font-size: 18px; 
+}
+
+.choice small {
+    display: block; 
+    color: #7b849e; 
+    font-size: 14px; 
+    margin-top: 5px;
+}
+
+.choice-price { 
+    color: #465b8b; 
+    font-weight: 600; 
+    float: right; 
+}
+
+.skin-options { 
+    display: flex; 
+    gap: 15px; 
+    align-items: center; 
+    flex-wrap: wrap; 
+}
+
+.skin-choice { 
+    width: 45px; 
+    height: 45px; 
+    border-radius: 50%; 
+    border: 2px solid white; 
+    box-shadow: 0 0 0 1px #c5c5d6; 
+    cursor: pointer; 
+}
+
+.skin-choice.selected { 
+    box-shadow: 0 0 0 3px #a98ac5; 
+}
 
 .option-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .option-button { background: white; border: 1px solid #c4c9e2; border-radius: 6px; padding: 14px 10px; color: #465b8b; cursor: pointer; font-size: 15px; min-height: 55px; }
@@ -168,8 +232,26 @@ header a, .logo-link {
 .accessory-name { flex: 1; }
 .accessory-price { font-weight: 600; white-space: nowrap; }
 
-.form-section textarea { width: 100%; min-height: 90px; resize: vertical; padding: 13px; border: 1px solid #c4c9e2; border-radius: 5px; outline: none; font-size: 15px; color: #465b8b; background: white; }
-.form-section textarea:focus { border-color: #a98ac5; }
+.form-section textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 120px;
+    resize: vertical;
+    padding: 15px;
+    border: 1px solid #c4c9e2;
+    border-radius: 5px;
+    outline: none;
+    font-size: 15px;
+    color: #465b8b;
+    background: white;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.form-section textarea:focus {
+    border-color: #a98ac5;
+}
 
 /* --- UPLOAD BOX STYLES --- */
 .reference-photo-box { 
@@ -216,7 +298,17 @@ header a, .logo-link {
 .summary-divider { border-top: 1px solid #deddec; margin: 18px 0; }
 .summary-total { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 17px; }
 .summary-total strong { color: #465b8b; font-size: 21px; white-space: nowrap; }
-.summary-disclaimer { font-size: 13px; color: #858ba2; margin: 14px 0; line-height: 1.6; }
+
+.summary-disclaimer {
+    background-color: #fdfae6;
+    border: 2px solid #e6d2b5; 
+    border-radius: 10px; 
+    padding: 15px; 
+    font-size: 14px; 
+    color: #1c3169;
+    margin: 20px 0;
+    line-height: 1.5;
+}
 
 .confirm-button { width: 100%; padding: 18px; background: #69c27c; border: none; border-radius: 6px; color: white; font-size: 18px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.2s; }
 .confirm-button:hover { background: #52aa67; }
@@ -287,6 +379,7 @@ header a, .logo-link {
     .footer { grid-template-columns: 1fr; padding: 30px 22px; gap: 20px; font-size: 14px; }
     .copyright { text-align: left; font-size: 12px; }
 }
+
 /* --- REQUIRED UPLOAD ERROR TEXT --- */
 .field-error {
     color: #e74c3c;
@@ -294,3 +387,4 @@ header a, .logo-link {
     font-weight: 600;
     margin: -12px 0 15px;
 }
+
