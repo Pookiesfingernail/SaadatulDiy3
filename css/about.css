@@ -58,9 +58,6 @@
 /* ================= SHARED HEADER ================= */
 /* The main header/navigation styles come from global.css. */
 
-.about-page .logo-container {
-    font-size: 32px;
-}
 
 .about-page .logo-link {
     text-decoration: none;      
