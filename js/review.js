@@ -14,7 +14,7 @@ const MAX_REVIEW_PHOTOS = 4;
 // Each entry: { file: File, url: string (object URL for preview) }.
 let selectedPhotos = [];
 
-// ---------- Star rating highlight ----------
+//  Star rating highlight 
 // The form shows 5 labels (values 5..1). A label is "filled"
 // when its star value is <= the selected rating, so picking
 // 3 stars lights up exactly 3 stars.
@@ -33,7 +33,7 @@ reviewForm.addEventListener('change', event => {
     if (event.target.name === 'rating') updateRatingHighlight();
 });
 
-// ---------- Photo previews with X remove button ----------
+//  Photo previews with X remove button 
 function renderPhotoPreviews() {
     imagePreview.innerHTML = '';
 

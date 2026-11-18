@@ -27,7 +27,7 @@ function statusLabel(status) {
     return `<span class="order-status ${SDIY.escapeHtml(status)}">${SDIY.escapeHtml(status.replaceAll("_", " "))}</span>`;
 }
 
-// ---------- TABS ----------
+// TABS
 function openTab(tab) {
     if (!TABS.includes(tab)) tab = "profile";
 
@@ -50,7 +50,7 @@ function openTab(tab) {
 
 window.addEventListener("hashchange", () => openTab(location.hash.slice(1)));
 
-// ---------- PROFILE ----------
+//  PROFILE 
 function fillProfile(user) {
     Object.entries(user).forEach(([key, value]) => {
         const input = profileForm.elements[key];
@@ -129,7 +129,7 @@ passwordForm.addEventListener("submit", async event => {
     }
 });
 
-// ---------- FAVOURITES ----------
+// FAVOURITES 
 const favouritesList = document.getElementById("favouritesList");
 
 function renderFavourites(favourites) {
@@ -199,7 +199,7 @@ favouritesList.addEventListener("click", async event => {
     }
 });
 
-// ---------- ORDER HISTORY ----------
+//  ORDER HISTORY 
 function renderOrders(orders) {
     const box = document.getElementById("ordersList");
 
@@ -295,10 +295,10 @@ async function loadOrders() {
     }
 }
 
-// ---------- LOGOUT ----------
+//  LOGOUT 
 document.getElementById("logoutButton").addEventListener("click", SDIY.logout);
 
-// ---------- START ----------
+//  START 
 (async () => {
     const user = await SDIY.requireLogin("Please log in or sign up to view your account.");
     if (!user) return;

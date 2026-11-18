@@ -10,15 +10,9 @@
  * - Select other designs
  * - Increase/decrease quantity
  * - Add product to cart
- *
- * Slideshow, product information and
- * recommendations have been removed.
  */
 
-// ==========================================
 // PRODUCT VARIABLES
-// ==========================================
-
 let currentProduct = null;
 let currentVariants = [];
 let selectedVariant = null;
@@ -51,9 +45,7 @@ if (mainImage) {
 }
 
 
-// ==========================================
 // OTHER DESIGN SELECTION
-// ==========================================
 
 function selectDesign(element, imageSrc) {
 
@@ -81,11 +73,9 @@ function selectDesign(element, imageSrc) {
 }
 
 
-// ==========================================
-// DESIGN VARIANTS (e.g. Pink / Blue)
+// DESIGN VARIANTS
 // Data comes from the product_variants table.
 // Products with 0 or 1 designs hide this section.
-// ==========================================
 
 function selectVariant(index) {
     const variant = currentVariants[index];
@@ -111,9 +101,7 @@ function selectVariant(index) {
 }
 
 
-// ==========================================
 // QUANTITY SELECTOR
-// ==========================================
 
 function maxQuantity() {
 
@@ -159,9 +147,8 @@ minusBtn.addEventListener("click", () => {
 });
 
 
-// ==========================================
 // ADD TO CART
-// ==========================================
+
 
 addToCartButton.addEventListener("click", async () => {
 
@@ -230,9 +217,7 @@ addToCartButton.addEventListener("click", async () => {
 });
 
 
-// ==========================================
 // DISPLAY PRODUCT FROM DATABASE
-// ==========================================
 
 function renderProduct(data) {
 
@@ -244,9 +229,7 @@ function renderProduct(data) {
 
     currentProduct = product;
 
-    // ======================================
     // PRODUCT TITLE
-    // ======================================
 
     document.title =
         product.name + " | Sa'adatul D.I.Y";
@@ -254,17 +237,15 @@ function renderProduct(data) {
     productTitle.textContent = product.name;
 
 
-    // ======================================
+
     // PRODUCT PRICE
-    // ======================================
+
 
     productPrice.textContent =
         "BND " + SDIY.formatPrice(product.price);
 
 
-    // ======================================
     // PRODUCT DESCRIPTION
-    // ======================================
 
     productDescription.textContent =
         product.description ||
@@ -273,10 +254,7 @@ function renderProduct(data) {
         ", made with love just for you.";
 
 
-    // ======================================
     // PRODUCT IMAGE
-    // ======================================
-
     // Display one main image only.
     // No slideshow arrows or dots.
 
@@ -293,9 +271,7 @@ function renderProduct(data) {
     mainImage.alt = product.name;
 
 
-    // ======================================
     // STOCK AVAILABILITY
-    // ======================================
 
     const stock =
         product.stock === null ||
@@ -338,12 +314,10 @@ function renderProduct(data) {
     qtyInput.value = 1;
 
 
-    // ======================================
     // OTHER DESIGNS / PRODUCT VARIANTS
-    // Shows design options (Pink, Blue, ...) only when the
+    // Shows design options only when the
     // product has MORE THAN ONE design. Single-design products
     // hide the whole section automatically.
-    // ======================================
 
     const designOptions = otherDesigns.querySelector(
         ".design-options"
@@ -411,16 +385,10 @@ function renderProduct(data) {
 
     }
 
-    // Product Information removed.
-    // You May Also Like removed.
-    // Slideshow removed.
-
 }
 
 
-// ==========================================
 // LOAD PRODUCT FROM DATABASE
-// ==========================================
 
 async function loadProduct() {
 
@@ -482,8 +450,6 @@ async function loadProduct() {
 }
 
 
-// ==========================================
 // INITIALIZE PRODUCT PAGE
-// ==========================================
 
 loadProduct();

@@ -5,7 +5,7 @@ let subtotal = 0;
 let cartItems = [];
 let fulfilment = "delivery";
 
-// ---------- ELEMENTS ----------
+//  ELEMENTS 
 const placeOrderButtons = document.querySelectorAll(".place-order");
 const shippingRadios = document.querySelectorAll('input[name="shipping"]');
 const subtotalText = document.getElementById("subtotal");
@@ -18,7 +18,7 @@ const addressFields = document.getElementById("addressFields");
 const shippingOptions = document.getElementById("shippingOptions");
 const addressInputs = addressFields.querySelectorAll("input");
 
-// ---------- TOTALS ----------
+//  TOTALS 
 function updateTotals() {
     const selected = document.querySelector('input[name="shipping"]:checked');
     const fee = fulfilment === "delivery" && selected ? Number(selected.value) : 0;
@@ -32,7 +32,7 @@ shippingRadios.forEach(radio => {
     radio.addEventListener("change", updateTotals);
 });
 
-// ---------- DELIVERY / PICKUP TOGGLE ----------
+//  DELIVERY / PICKUP TOGGLE 
 document.querySelectorAll(".switch-option").forEach(button => {
     button.addEventListener("click", () => {
         document.querySelectorAll(".switch-option").forEach(item => {
@@ -53,12 +53,12 @@ document.querySelectorAll(".switch-option").forEach(button => {
     });
 });
 
-// ---------- BRUNEI PHONE ----------
+//  BRUNEI PHONE 
 function enforceBruneiPhone(input) {
     input.value = input.value.replace(/\D/g, "").slice(0, 7);
 }
 
-// ---------- PAYMENT PROOF ----------
+// PAYMENT PROOF 
 document.getElementById("proof").addEventListener("change", event => {
     const file = event.target.files[0];
     document.getElementById("fileName").textContent = file ? file.name : "No file selected";
@@ -69,7 +69,7 @@ document.getElementById("proof").addEventListener("change", event => {
     }
 });
 
-// ---------- RENDER ORDER ITEMS ----------
+//  RENDER ORDER ITEMS 
 function renderOrder() {
     emptyOrder.hidden = cartItems.length > 0;
 
@@ -93,7 +93,7 @@ function renderOrder() {
     updateTotals();
 }
 
-// ---------- PREFILL FROM PROFILE ----------
+//  PREFILL FROM PROFILE 
 function prefill(user) {
     const values = {
         email: user.email,
@@ -119,9 +119,7 @@ function prefill(user) {
     });
 }
 
-// ==========================================
 // SUBMIT ORDER (This is the function we call)
-// ==========================================
 async function submitOrder() {
     const form = document.getElementById("checkoutForm");
 
@@ -219,7 +217,8 @@ console.log("Modal display:", getComputedStyle(modal).display);
     }
 }
 
-// ---------- LOAD CART (login required) ----------
+// LOAD CART (login required) 
+
 async function loadCheckout() {
     placeOrderButtons.forEach(button => { button.disabled = true; });
 

@@ -26,7 +26,7 @@ contactForm.addEventListener("submit", async function (event) {
     const phoneDigits = document.getElementById("phone-number").value.replace(/\D/g, "");
     const message = document.getElementById("message").value.trim();
 
-    // ---- Client-side validation (server validates again) ----
+    //  Client-side validation (server validates again) 
     let firstError = null;
 
     if (fullName.length < 2) {

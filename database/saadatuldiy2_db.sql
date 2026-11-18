@@ -5,7 +5,6 @@
 --  Safe to re-import: tables are only created when missing and
 --  products are only inserted when they do not exist yet.
 --  Existing customers, orders and reviews are NOT deleted.
--- =========================================================
 
 CREATE DATABASE IF NOT EXISTS saadatuldiy2_db
     CHARACTER SET utf8mb4
@@ -13,9 +12,8 @@ CREATE DATABASE IF NOT EXISTS saadatuldiy2_db
 
 USE saadatuldiy2_db;
 
--- ---------------------------------------------------------
 --  CUSTOMERS
--- ---------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS users (
     id            INT UNSIGNED NOT NULL AUTO_INCREMENT,
     full_name     VARCHAR(100) NOT NULL,
@@ -42,10 +40,9 @@ CREATE TABLE IF NOT EXISTS login_attempts (
     KEY idx_attempts_ip (ip_address, attempted_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ---------------------------------------------------------
+
 --  PRODUCTS
 --  price is always in BND (Brunei dollars).
--- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS products (
     id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name        VARCHAR(150) NOT NULL,
@@ -62,12 +59,10 @@ CREATE TABLE IF NOT EXISTS products (
     KEY idx_products_category (category, is_active)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ---------------------------------------------------------
 --  PRODUCT DESIGNS / VARIANTS
 --  One product can have many designs.
 --  If a product has NO rows here it is a single-design product
 --  and the "Other Designs" section is hidden automatically.
--- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS product_variants (
     id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
     product_id  INT UNSIGNED NOT NULL,
@@ -95,11 +90,9 @@ CREATE TABLE IF NOT EXISTS product_images (
         REFERENCES products (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ---------------------------------------------------------
 --  CUSTOM ORDERS (keychain / figurine made-to-order dolls)
 --  Created before cart_items because cart rows can point
 --  to a custom order.
--- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS custom_orders (
     id              INT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id         INT UNSIGNED NOT NULL,
@@ -151,11 +144,9 @@ CREATE TABLE IF NOT EXISTS custom_order_files (
         REFERENCES custom_order_items (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ---------------------------------------------------------
 --  SHOPPING CART & FAVOURITES
 --  cart_items can hold a normal product (product_id +
 --  variant_id) OR a custom order (custom_order_id).
--- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS cart_items (
     id               INT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id          INT UNSIGNED NOT NULL,
@@ -190,9 +181,7 @@ CREATE TABLE IF NOT EXISTS favourites (
         REFERENCES products (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ---------------------------------------------------------
 --  ORDERS (checkout)
--- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS orders (
     id            INT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id       INT UNSIGNED NOT NULL,
@@ -245,11 +234,9 @@ CREATE TABLE IF NOT EXISTS order_items (
         REFERENCES custom_orders (id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ---------------------------------------------------------
 --  CUSTOMER REVIEWS
 --  The 4 original reviews on review.html stay hard-coded in
 --  the page. Only NEW customer reviews are stored here.
--- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS reviews (
     id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id        INT UNSIGNED NULL COMMENT 'Logged-in customer who wrote the review (NULL = guest)',
@@ -282,9 +269,7 @@ CREATE TABLE IF NOT EXISTS review_images (
         REFERENCES reviews (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ---------------------------------------------------------
 --  CONTACT US MESSAGES
--- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS contact_messages (
     id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
     full_name  VARCHAR(100) NOT NULL,
@@ -297,11 +282,9 @@ CREATE TABLE IF NOT EXISTS contact_messages (
     KEY idx_contact_created (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ---------------------------------------------------------
 --  ORDER EMAIL NOTIFICATIONS
 --  One row per order email attempt so failed emails can be
 --  retried safely without creating duplicate orders.
--- ---------------------------------------------------------
 CREATE TABLE IF NOT EXISTS email_notifications (
     id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
     order_id     INT UNSIGNED NOT NULL,
@@ -318,10 +301,8 @@ CREATE TABLE IF NOT EXISTS email_notifications (
         REFERENCES orders (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- =========================================================
 --  APPROVED PRODUCTS - exactly 20 (5 per category)
 --  Keychains=1 Figurines=2 Plushies=3 Accessories=4
--- =========================================================
 UPDATE products SET name='Nailong Flower Keychain', slug='nailong-flower-keychain', category='keychain', price=30.00, stock=NULL, is_active=1,
     description='Inspired by the adorable Nailong character, dressed up as a bright and cheerful sunflower! With its cute little face, vibrant orange petals and sunny yellow body, this little flower is sure to brighten up your day. Perfect for adding a touch of cuteness to your bag or keys! Height +-12cm.',
     image='shopkeychain/Flower-nailong.png' WHERE slug='nailong-flower-keychain';
@@ -405,18 +386,17 @@ INSERT IGNORE INTO products (name, slug, category, price, description, image, st
     ('Stitch Pouch',              'stitch-pouch',              'accessory',20.00, 'A cute Stitch pouch that you can use to keep your coins, earbuds, keys, and other small essentials.', 'shopacc/Stitch.png', NULL),
     ('Bracelet',                  'bracelet',                  'accessory', 7.00, 'A pair of handmade crochet bands with little bows in two shades of pinks.', 'shopacc/Bracelets.png', NULL);
 
--- ---------------------------------------------------------
 --  PRODUCT DESIGNS (variants)
 --  No separate design photos exist yet, so each variant keeps
 --  the product's main image. When real design photos are added,
 --  update product_variants.image_path - the product page will
 --  then swap the main image automatically.
--- ---------------------------------------------------------
--- 1) Soft-retire every existing variant so stale designs from
+
+-- Soft-retire every existing variant so stale designs from
 --    older imports can never leak onto the shop.
 UPDATE product_variants SET is_active = 0;
 
--- 2) Reactivate + sync the approved designs (matches by slug+name).
+-- Reactivate + sync the approved designs (matches by slug+name).
 UPDATE product_variants pv
 JOIN products p ON p.id = pv.product_id
 JOIN (
@@ -435,7 +415,7 @@ JOIN (
 ) v ON v.slug = p.slug AND v.name = pv.name
 SET pv.is_active = 1, pv.color = v.color, pv.image_path = v.image_path, pv.price = v.price, pv.sort_order = v.sort_order;
 
--- 3) Insert approved designs that are missing entirely.
+-- Insert approved designs that are missing entirely.
 INSERT INTO product_variants (product_id, name, color, image_path, price, sort_order, is_active)
 SELECT p.id, v.name, v.color, v.image_path, v.price, v.sort_order, 1
 FROM products p
@@ -457,18 +437,14 @@ WHERE NOT EXISTS (
     SELECT 1 FROM product_variants pv WHERE pv.product_id = p.id AND pv.name = v.name
 );
 
--- ---------------------------------------------------------
 --  CLEANUP: remove the old sample keychain product.
 --  Only the unwanted sample row is deleted - the five
 --  approved keychains and all other products are kept.
 --  order_items.product_id is ON DELETE SET NULL so past
 --  orders keep their history.
--- ---------------------------------------------------------
 DELETE FROM products WHERE slug = 'sample-crochet-keychain';
 
--- ---------------------------------------------------------
 --  UPGRADES FOR DATABASES IMPORTED FROM AN OLDER VERSION
--- ---------------------------------------------------------
 ALTER TABLE orders  ADD COLUMN IF NOT EXISTS notes TEXT NULL COMMENT 'Order notes written by the customer on the cart page' AFTER shipping_zone;
 ALTER TABLE reviews ADD COLUMN IF NOT EXISTS user_id INT UNSIGNED NULL COMMENT 'Logged-in customer who wrote the review (NULL = guest)' AFTER id;
 ALTER TABLE reviews ADD KEY IF NOT EXISTS idx_reviews_user (user_id);

@@ -336,14 +336,14 @@ const confirmButton = document.getElementById("confirmCustom");
 const specialNotes = document.getElementById("specialNotes");
 
 confirmButton.addEventListener("click", function() {
-    // 1. Clear previous errors
+    // Clear previous errors
     document.querySelectorAll('.missing-error').forEach(el => el.classList.remove('missing-error'));
     document.querySelectorAll('.form-section').forEach(el => el.classList.remove('has-error'));
 
     let hasError = false;
     let firstErrorElement = null;
 
-    // 2. Check every figurine for missing fields
+    // Check every figurine for missing fields
     figurines.forEach((item, index) => {
         if (!item.gender) {
             document.querySelectorAll(`.choice[data-index="${index}"][data-field="gender"]`).forEach(el => el.classList.add('missing-error'));
@@ -388,7 +388,7 @@ confirmButton.addEventListener("click", function() {
         });
     });
 
-    // 3. If there's an error, highlight the whole section and scroll to it
+    // If there's an error, highlight the whole section and scroll to it
     if (hasError) {
         // Add red background to the parent sections containing errors
         document.querySelectorAll('.missing-error').forEach(el => {
@@ -399,10 +399,10 @@ confirmButton.addEventListener("click", function() {
         if (firstErrorElement) {
             firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        return; // Stop! Don't show the modal.
+        return; // Stop Don't show the modal.
     }
 
-    // 4. If everything is perfect, save draft and show modal
+    //  If everything is perfect, save draft and show modal
     sessionStorage.setItem(DRAFT_KEY, JSON.stringify({
         figurines: figurines,
         specialNotes: specialNotes.value
