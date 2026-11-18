@@ -1,14 +1,5 @@
 <?php
-/*
- * CHECKOUT (login required) - POST multipart/form-data from checkout.html
- * Fields: email, full_name, phone, country, fulfilment (delivery|pickup),
- *         address, city, postcode, shipping (5|7|9|10), proof (file)
- *
- * Creates ONE order from the customer's saved cart. The cart can
- * contain normal products (with designs) AND custom orders.
- * Afterwards an order notification email is sent to
- * ORDER_NOTIFY_EMAIL (saadatul.art2@gmail.com) via SMTP.
- */
+
 
 declare(strict_types=1);
 
@@ -20,7 +11,7 @@ const PROOF_MAX_BYTES = 5 * 1024 * 1024;
 const PROOF_DIR = __DIR__ . '/../uploads/payment-proofs';
 const CUSTOM_UPLOAD_DIR = __DIR__ . '/../uploads/custom-orders';
 
-// value of the shipping radio button => [zone, fee]
+// value of the shipping radio button [zone, fee]
 const SHIPPING_ZONES = [
     '5'  => ['Brunei Muara', 5.00],
     '7'  => ['Tutong', 7.00],
@@ -31,7 +22,7 @@ const SHIPPING_ZONES = [
 $userId = require_login();
 require_method('POST');
 
-// ---------- Customer details ----------
+// Customer details 
 $fields = [];
 foreach (['email', 'full_name', 'phone', 'country', 'address', 'city', 'postcode', 'fulfilment', 'shipping'] as $name) {
     $fields[$name] = clean_text($_POST[$name] ?? '');
@@ -54,7 +45,7 @@ $phoneDigits = preg_replace('/\D/', '', $fields['phone']) ?? '';
 if (preg_match('/^673\d{7}$/', $phoneDigits) !== 1) {
     $errors['phone'] = 'Please enter a valid Brunei phone number (+673 followed by 7 digits).';
 } else {
-    // Store the full international format, e.g. +6737123456
+    // Store the full international format
     $fields['phone'] = '+673' . substr($phoneDigits, 3);
 }
 
@@ -307,7 +298,7 @@ try {
     throw $error;
 }
 
-// ---------- Order notification email ----------
+// Order notification email 
 // Sent to ORDER_NOTIFY_EMAIL (saadatul.art2@gmail.com) via SMTP.
 // The order is already saved - a failed email never loses it.
 $emailStatus = 'skipped';
@@ -402,7 +393,7 @@ function build_order_email(int $orderId, array $fields, array $orderRows, float 
             . ', ' . $e($fields['postcode']) . ', Brunei Darussalam</p>';
     }
 
-    // ---- Section A: normal products ----
+    //  Section A: normal products 
     if ($productRows) {
         $html .= '<h3 style="color:#465b8b">Products Ordered</h3><table cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%">';
         $html .= '<tr style="background:#eef2fb"><th align="left">Product</th><th>Category</th><th>Design</th><th>Qty</th><th>Unit price</th><th>Subtotal</th></tr>';
@@ -414,7 +405,7 @@ function build_order_email(int $orderId, array $fields, array $orderRows, float 
         $html .= '</table>';
     }
 
-    // ---- Section B: customised products ----
+    //  Section B: customised products 
     $attachments = [];
     if ($customRows) {
         $html .= '<h3 style="color:#465b8b">Customised Products</h3>';
@@ -443,7 +434,7 @@ function build_order_email(int $orderId, array $fields, array $orderRows, float 
             $co->execute([$customId]);
             $coRow = $co->fetch() ?: [];
 
-            $typeLabel = $item['name']; // e.g. "Custom Keychain Order #3"
+            $typeLabel = $item['name'];
             $html .= '<p><strong>' . $e($typeLabel) . '</strong> (' . $e(ucfirst((string) ($coRow['order_type'] ?? 'custom'))) . ')'
                 . ' &mdash; Qty: ' . $item['quantity']
                 . ' &mdash; Estimated price: BND ' . money($item['price'] * $item['quantity']) . '</p><ul>';
@@ -486,13 +477,13 @@ function build_order_email(int $orderId, array $fields, array $orderRows, float 
         }
     }
 
-    // ---- Customer order notes ----
+    // Customer order notes 
     if ($orderNotes !== '') {
         $html .= '<h3 style="color:#465b8b">Customer Order Notes</h3>';
         $html .= '<p>' . nl2br($e($orderNotes)) . '</p>';
     }
 
-    // ---- Section C: order summary ----
+    // Section C: order summary 
     $html .= '<h3 style="color:#465b8b">Order Summary</h3>';
     $html .= '<table cellpadding="6" cellspacing="0" style="border-collapse:collapse;width:100%">';
     $html .= '<tr><td>Subtotal</td><td align="right">BND ' . money($subtotal) . '</td></tr>';

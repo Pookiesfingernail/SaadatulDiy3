@@ -1,12 +1,4 @@
 <?php
-/*
- * SHOPPING CART (login required) - saved in the cart_items table
- *   GET                                        list cart items
- *   POST   JSON { product_id, variant_id?, quantity }  add product/design to cart
- *   PATCH  JSON { cart_item_id, quantity }     change quantity
- *   DELETE JSON { cart_item_id }  or  { product_id, variant_id? }  remove item
- * Custom orders are added by api/custom_order.php, not here.
- */
 
 declare(strict_types=1);
 
@@ -50,7 +42,7 @@ if ($method === 'DELETE') {
     json_response(['success' => true, 'message' => 'Item removed from your cart.'] + cart_summary($userId));
 }
 
-// ---------- PATCH / POST ----------
+//  PATCH / POST 
 if ($method === 'PATCH') {
     if ($cartItemId === null || !in_array($cartItemId, $ownedIds, true)) {
         json_error('Cart item not found.', 404);
