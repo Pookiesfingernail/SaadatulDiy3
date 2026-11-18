@@ -48,7 +48,7 @@ nav {
     transform: translateY(40px);
 }
 
-/*-----------------------SaadatulDiy Contact details----------------------*/
+/*SaadatulDiy Contact details*/
 
 .contact-details h4 {
     font-family: 'inter', sans-serif;
@@ -83,7 +83,7 @@ nav {
     width: 50%;
 }
 
-/*-----------------------------Contact Form-------------------------------------------*/
+/*Contact Form*/
 .contact-detailsform {
     display: flex;
     justify-content: space-between;
@@ -168,7 +168,7 @@ nav {
     background-color: #9480b8;
 }
 
-/*----------------------------Social Media sections-------------------------------------*/
+/* Social Media sections */
 .insta {
     font-family: 'inter', sans-serif;
     font-size: 1.3em;
@@ -262,7 +262,7 @@ nav {
     opacity: 0.7;
 }
 
-/*-------------------Tiktok Videos--------------------*/
+/* Tiktok Videos */
 .tiktok-head {
     font-size: 1.4em;
     font-weight: 600;
@@ -305,7 +305,7 @@ nav {
     background-color: #b39bdc47;
 }
 
-/* --- Brunei phone input: fixed grey +673 prefix --- */
+/* Brunei phone input: fixed grey +673 prefix */
 .phone-input-group {
     display: flex;
     align-items: stretch;
@@ -331,7 +331,7 @@ nav {
     min-width: 0;
 }
 
-/* --- Contact form success / error message --- */
+/* Contact form success / error message */
 .form-message {
     margin-top: 14px;
     font-size: 0.95em;

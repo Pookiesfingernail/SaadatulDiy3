@@ -18,7 +18,7 @@ body {
     font-size: 16px; 
 }
 
-/* --- HEADER --- */
+/*  HEADER  */
 .top-banner {
     height: 130px;
     display: flex;
@@ -40,7 +40,7 @@ body {
 .header-icons a { color: #a88dc6; transition: 0.2s; }
 .header-icons a:hover { color: #8b6ea8; }
 
-/* --- MAIN LAYOUT --- */
+/*  MAIN LAYOUT  */
 .checkout-layout {
     /* INCREASED max-width to 1300px to fill the laptop screen */
     width: min(100% - 60px, 1300px); 
@@ -61,11 +61,10 @@ body {
 h1, h2, p { margin-top: 0; }
 h1, h2 { font-weight: 500; margin-bottom: 15px; }
 
-/* BIGGER HEADINGS */
 h1 { font-size: 24px; } 
 h2 { font-size: 20px; }
 
-/* --- FORM FIELDS --- */
+/*  FORM FIELDS  */
 label.field-label, .order-info form > label:not(.upload-button) {
     display: block; 
     font-size: 14px;
@@ -92,7 +91,7 @@ input:focus, select:focus { border-color: var(--purple); box-shadow: 0 0 0 3px #
 .section-rule, .summary-rule { border-top: 1px solid #dedede; margin: 25px 0; }
 
 
-/* --- DELIVERY / PICKUP --- */
+/* DELIVERY / PICKUP  */
 .choice-switch {
     display: grid; grid-template-columns: 1fr 1fr; padding: 5px;
     border: 1px solid var(--blue-line); border-radius: 6px;
@@ -111,7 +110,7 @@ input:focus, select:focus { border-color: var(--purple); box-shadow: 0 0 0 3px #
 .two-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
 
-/* --- SHIPPING --- */
+/* SHIPPING  */
 .shipping-options {
     border: 1px solid var(--blue-line); border-radius: 5px;
     overflow: hidden; margin: 10px 0 25px; background: #f0f1fb;
@@ -129,7 +128,7 @@ input:focus, select:focus { border-color: var(--purple); box-shadow: 0 0 0 3px #
 .shipping-options strong { margin-left: auto; font-weight: 600; }
 
 
-/* --- PICKUP ADDRESS BOX --- */
+/* PICKUP ADDRESS BOX  */
 .pickup-address-details {
     background: #f0f1fb;
     border: 1px solid var(--blue-line);
@@ -151,7 +150,7 @@ input:focus, select:focus { border-color: var(--purple); box-shadow: 0 0 0 3px #
 .gps-link:hover { text-decoration: underline; }
 
 
-/* --- PAYMENT --- */
+/* PAYMENT */
 .small-note { font-size: 13px; color: var(--muted); margin: -5px 0 15px; }
 .payment-box { border: 1px solid var(--blue-line); border-radius: 5px; overflow: hidden; background: #f1f1fb; }
 .payment-heading { background: #d7d7ed; padding: 15px; text-align: center; font-size: 16px; font-weight: 600;}
@@ -162,7 +161,7 @@ input:focus, select:focus { border-color: var(--purple); box-shadow: 0 0 0 3px #
 .file-name { margin-left: 10px; color: var(--muted); font-size: 13px; }
 
 
-/* --- FORM VALIDATION STYLES --- */
+/* FORM VALIDATION STYLES */
 
 /* When the user leaves the input empty and clicks submit, it turns red */
 input:invalid:not(:placeholder-shown),
@@ -192,7 +191,7 @@ label:has(+ div select:required)::after {
     background-color: #fff5f5;
 }
 
-/* --- SUMMARY ORDER --- */
+/* SUMMARY ORDER */
 .summary-panel { padding: 30px; }
 .summary-title { margin: 0 0 30px; font-size: 24px; }
 
@@ -209,7 +208,7 @@ label:has(+ div select:required)::after {
 .total-line strong { font-weight: 600; font-size: 20px; }
 
 
-/* --- BUTTONS --- */
+/* BUTTONS */
 .place-order, .back-button {
     display: block; width: 100%; border: 0; border-radius: 6px; text-align: center; padding: 18px;
     color: #ffffff; background: #ad95bd; box-shadow: 0 4px 6px #c9c9d2; font-size: 16px; font-weight: 700; text-decoration: none; cursor: pointer;
@@ -319,7 +318,7 @@ label:has(+ div select:required)::after {
 }
 .btn-purple:hover { background: #9b7dba; }
 
-/* --- FOOTER --- */
+/* FOOTER */
 .footer {
     background: #a9cfdf; color: #ffffff; padding: 40px 5% 20px;
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; box-shadow: inset 0 2px 5px rgba(76,126,151,.16);
@@ -332,7 +331,7 @@ label:has(+ div select:required)::after {
 .copyright { grid-column: 1 / -1; text-align: center; font-size: 14px; margin: 20px 0 0; }
 
 
-/* --- MOBILE --- */
+/* MOBILE */
 @media (max-width: 850px) {
     .checkout-layout { display: flex; flex-direction: column; width: 95%; margin-top: 20px;}
     .summary-panel { order: -1; width: 100%;}
@@ -415,7 +414,7 @@ label:has(+ div select:required)::after {
 }
 .btn-home:hover { background: #f0f0f0; }
 
-/* --- Brunei phone input: fixed grey +673 prefix --- */
+/* Brunei phone input: fixed grey +673 prefix */
 .phone-input-group {
     display: flex;
     align-items: stretch;
@@ -458,7 +457,7 @@ label:has(+ div select:required)::after {
     box-shadow: none; 
 }
 
-/* --- Order confirmation details inside the success modal --- */
+/* Order confirmation details inside the success modal */
 .order-confirm-details {
     margin: 15px auto 5px;
     max-width: 320px;

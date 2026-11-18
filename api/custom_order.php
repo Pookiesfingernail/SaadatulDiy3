@@ -2,12 +2,6 @@
 /*
  * CUSTOM ORDER (login required) - POST multipart/form-data
  * Sent from custom.html (keychain) and custom2.html (figurine).
- *
- * Fields:
- *   data  JSON string: { orderType: "keychain"|"figurine",
- *                        keychains|figurines: [...], specialNotes }
- *   files reference photos: files[0][hair], files[0][outfit], files[0][accessory], ...
- *
  * Saves the custom order + dolls + uploaded photos in MySQL,
  * adds it to the customer's cart and returns the cart summary.
  */
@@ -22,7 +16,7 @@ const CUSTOM_UPLOAD_DIR = __DIR__ . '/../uploads/custom-orders';
 $userId = require_login();
 require_method('POST');
 
-// ---------- Read the JSON part of the form ----------
+// Read the JSON part of the form 
 $raw = clean_text($_POST['data'] ?? '');
 $payload = $raw !== '' ? json_decode($raw, true) : null;
 
@@ -41,7 +35,7 @@ if (text_length($specialNotes) > CUSTOM_SPECIAL_NOTE_LIMIT) {
     json_error('Special notes must be ' . CUSTOM_SPECIAL_NOTE_LIMIT . ' characters or fewer.', 422);
 }
 
-// ---------- Save order, dolls and photos ----------
+// Save order, dolls and photos 
 $pdo = db();
 $pdo->beginTransaction();
 

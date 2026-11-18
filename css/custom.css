@@ -180,10 +180,30 @@ header a, .logo-link {
 .small-instruction { font-size: 14px; line-height: 1.7; color: #737d9a; margin: 12px 0; }
 
 /* --- CHOICES & OPTIONS --- */
-.gender-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.choice { background: white; border: 1px solid #c4c9e2; border-radius: 6px; padding: 17px 14px; cursor: pointer; color: #465b8b; text-align: left; font-size: 16px; transition: 0.2s; }
-.choice:hover { border-color: #a98ac5; background: #faf8ff; }
-.choice.selected { background: #e9e3f7; border: 2px solid #a98ac5; }
+.gender-options {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 14px; }
+
+.choice {
+     background: white; 
+     border: 1px solid #c4c9e2; 
+     border-radius: 6px; 
+     padding: 17px 14px; 
+     cursor: pointer; 
+     color: #465b8b; 
+     text-align: left; 
+     font-size: 16px; 
+     transition: 0.2s; }
+
+.choice:hover {
+     border-color: #a98ac5; 
+     background: #faf8ff; }
+
+.choice.selected { 
+    background: #e9e3f7; 
+    border: 2px solid #a98ac5; }
+
 .choice strong { display: block; font-size: 18px; }
 .choice small { display: block; color: #7b849e; font-size: 14px; margin-top: 5px; }
 .choice-price { color: #465b8b; font-weight: 600; float: right; }

@@ -1,7 +1,5 @@
-/* =========================================================
-   ACCOUNT DROPDOWN, CART BADGE & POP-UP MESSAGE
-   Shared by every page (works with global.css, custom.css, ...)
-   ========================================================= */
+/* ACCOUNT DROPDOWN, CART BADGE & POP-UP MESSAGE
+   Shared by every page (works with global.css, custom.css, ...) */
 
 .profile-icon.has-account-menu {
     position: relative;
