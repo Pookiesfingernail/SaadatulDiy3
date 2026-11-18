@@ -1,8 +1,8 @@
 <?php
 /*
  * CUSTOMER REVIEWS
- *   GET                                  list published reviews (newest first)
- *   POST multipart/form-data             submit a review
+ *   GET list published reviews (newest first)
+ *   POST multipart/form-data submit a review
  *     Fields: customer_name, product_name, rating (1-5), comment,
  *             images[] (optional, up to 4 JPG/PNG/WEBP photos)
  * The 4 original reviews stay hard-coded in review.html;
@@ -65,7 +65,7 @@ if ($method === 'GET') {
     json_response(['success' => true, 'reviews' => $reviews]);
 }
 
-// ---------- Submit a review ----------
+// Submit a review 
 $name = clean_text($_POST['customer_name'] ?? '');
 $product = clean_text($_POST['product_name'] ?? '');
 $comment = clean_text($_POST['comment'] ?? '');
@@ -88,7 +88,7 @@ if ($errors) {
     json_error(reset($errors), 422, ['errors' => $errors]);
 }
 
-// ---------- Optional photos (images[] or single image) ----------
+// Optional photos (images[] or single image) 
 $uploads = [];
 
 // Normalise both "images[]" and a single "image" upload into one list.
