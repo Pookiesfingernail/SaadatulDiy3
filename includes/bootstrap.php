@@ -29,9 +29,8 @@ set_exception_handler(function (Throwable $error): void {
     echo json_encode(['success' => false, 'message' => $message]);
 });
 
-// ---------------------------------------------------------
 //  SESSION (keeps the customer logged in)
-// ---------------------------------------------------------
+
 session_name('SDIYSESSID');
 $isHttps = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
 
@@ -49,9 +48,8 @@ session_set_cookie_params([
 ini_set('session.use_strict_mode', '1');
 session_start();
 
-// ---------------------------------------------------------
 //  JSON RESPONSES
-// ---------------------------------------------------------
+
 function json_response(array $data, int $status = 200): never
 {
     http_response_code($status);
@@ -99,14 +97,13 @@ function read_json(): array
     return $data;
 }
 
-// ---------------------------------------------------------
 //  CORS FOR LOCAL DEVELOPMENT
 //  The frontend runs on VS Code Live Server (port 5500) and
 //  the PHP backend on php -S (port 8080). Live Server is
 //  configured to proxy /api to the PHP server, so requests
 //  are normally same-origin. These origins are also allowed
 //  directly for convenience. Never add "*" here.
-// ---------------------------------------------------------
+
 const DEV_ORIGINS = [
     'http://127.0.0.1:5500',
     'http://localhost:5500',
@@ -177,9 +174,8 @@ function check_same_origin(): void
 
 check_same_origin();
 
-// ---------------------------------------------------------
 //  INPUT HELPERS
-// ---------------------------------------------------------
+
 function clean_text(mixed $value): string
 {
     if (!is_scalar($value)) {
@@ -208,9 +204,9 @@ function money(float $amount): string
     return number_format($amount, 2, '.', '');
 }
 
-// ---------------------------------------------------------
+
 //  LOGIN HELPERS
-// ---------------------------------------------------------
+
 function current_user_id(): ?int
 {
     $id = $_SESSION['user_id'] ?? null;
@@ -273,9 +269,8 @@ function user_payload(array $user): array
     ];
 }
 
-// ---------------------------------------------------------
 //  PRODUCT & CART HELPERS
-// ---------------------------------------------------------
+
 const PRODUCT_CATEGORIES = ['keychain', 'figurine', 'plushie', 'accessory'];
 
 function product_payload(array $row, array $favouriteIds = []): array

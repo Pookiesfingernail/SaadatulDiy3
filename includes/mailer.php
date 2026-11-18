@@ -7,7 +7,6 @@
  *
  * Returns true only when the SMTP server accepts the message.
  * Returns false (and logs the reason) when it cannot be sent,
- * e.g. when SMTP credentials are not configured yet.
  */
 
 declare(strict_types=1);
@@ -90,7 +89,7 @@ function send_smtp_mail(string $to, string $subject, string $htmlBody, array $at
     if (!$send('RCPT TO:<' . $to . '>')) return $fail('RCPT TO', $read());
     if (!$send('DATA')) return $fail('DATA', $read());
 
-    // ---------- Build the MIME message ----------
+    // Build the MIME message
     $mixedBoundary = 'sdiy_mixed_' . bin2hex(random_bytes(8));
     $altBoundary  = 'sdiy_alt_' . bin2hex(random_bytes(8));
 
