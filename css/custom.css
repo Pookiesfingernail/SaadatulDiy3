@@ -702,24 +702,89 @@ header a, .logo-link {
 }
 
 /* RESPONSIVE */
-@media (max-width: 1000px) {
-    .custom-container { width: 96%; grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.9fr); gap: 20px; }
+@media (
+    max-width: 1000px) {
+    .custom-container { 
+
+        width: 96%; 
+        grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.9fr); 
+        gap: 20px; }
 }
 
-@media (max-width: 750px) {
-    .banner { margin: 0 12px; min-height: 170px; padding: 20px; background-position: center; }
+@media (
+    max-width: 750px) {
+
+    .banner { 
+        margin: 0 12px; 
+        min-height: 170px; 
+        padding: 20px; 
+        background-position: center; 
+    }
+
     .banner-content { max-width: 250px; }
-    .banner h1 { font-size: 23px; }
-    .banner p { font-size: 13px; }
-    .custom-container { display: flex; flex-direction: column; width: 100%; padding: 0 14px; margin: 20px auto 40px; gap: 18px; }
-    .custom-left { width: 100%; order: 1; }
-    .custom-container .summary-panel { width: 100%; order: 0; position: sticky; top: 5px; max-height: 48vh; overflow-y: auto; padding: 15px; z-index: 8; background: white; }
-    .section-heading h2 { font-size: 19px; }
-    .form-section { padding: 16px; margin-bottom: 15px; }
-    .gender-options { grid-template-columns: 1fr; }
-    .option-grid { grid-template-columns: 1fr 1fr; }
-    .footer { grid-template-columns: 1fr; padding: 30px 22px; gap: 20px; font-size: 14px; }
-    .copyright { text-align: left; font-size: 12px; }
+
+    .banner h1 { 
+        font-size: 23px; 
+    }
+
+    .banner p { 
+        font-size: 13px; 
+    }
+
+    .custom-container { 
+        display: flex; 
+        flex-direction: column; 
+        width: 100%; 
+        padding: 0 14px; 
+        margin: 20px auto 40px; 
+        gap: 18px; 
+    }
+
+    .custom-left { 
+        width: 100%; 
+        order: 1; 
+    }
+
+    .custom-container .summary-panel { 
+        width: 100%; 
+        order: 0; 
+        position: sticky; 
+        top: 5px; 
+        max-height: 48vh; 
+        overflow-y: auto; 
+        padding: 15px; 
+        z-index: 8; 
+        background: white; 
+    }
+
+    .section-heading h2 { 
+        font-size: 19px; 
+    }
+
+    .form-section { 
+        padding: 16px; 
+        margin-bottom: 15px;
+     }
+
+    .gender-options { 
+        grid-template-columns: 1fr; 
+    }
+
+    .option-grid { 
+        grid-template-columns: 1fr 1fr; 
+    }
+
+    .footer { 
+        grid-template-columns: 1fr; 
+        padding: 30px 22px; 
+        gap: 20px; 
+        font-size: 14px; 
+    }
+
+    .copyright { 
+        text-align: left; 
+        font-size: 12px;
+     }
 }
 
 /* REQUIRED UPLOAD ERROR TEXT */
