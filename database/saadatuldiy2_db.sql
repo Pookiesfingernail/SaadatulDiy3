@@ -1,16 +1,7 @@
 -- =========================================================
 --  Sa'adatul D.I.Y - MySQL / MariaDB database
 --  Database name: saadatuldiy2_db  (matches config/database.php)
---
---  HOW TO IMPORT (phpMyAdmin):
---    1. Open http://localhost/phpmyadmin
---    2. Click the "Import" tab
---    3. Choose this file: database/saadatuldiy2_db.sql
---    4. Click "Go" at the bottom
---
---  OR using the XAMPP command line:
---    C:\xampp\mysql\bin\mysql.exe -u root < database\saadatuldiy2_db.sql
---
+
 --  Safe to re-import: tables are only created when missing and
 --  products are only inserted when they do not exist yet.
 --  Existing customers, orders and reviews are NOT deleted.
@@ -73,7 +64,7 @@ CREATE TABLE IF NOT EXISTS products (
 
 -- ---------------------------------------------------------
 --  PRODUCT DESIGNS / VARIANTS
---  One product can have many designs (e.g. Pink and Blue).
+--  One product can have many designs.
 --  If a product has NO rows here it is a single-design product
 --  and the "Other Designs" section is hidden automatically.
 -- ---------------------------------------------------------
@@ -330,12 +321,6 @@ CREATE TABLE IF NOT EXISTS email_notifications (
 -- =========================================================
 --  APPROVED PRODUCTS - exactly 20 (5 per category)
 --  Keychains=1 Figurines=2 Plushies=3 Accessories=4
---
---  Step 1 UPDATEs match rows by their ORIGINAL slug so the
---  existing product IDs - and therefore carts, favourites
---  and order history - stay connected. Step 2 INSERT IGNORE
---  creates the same 20 products on a fresh database.
---  No sample products are inserted.
 -- =========================================================
 UPDATE products SET name='Nailong Flower Keychain', slug='nailong-flower-keychain', category='keychain', price=30.00, stock=NULL, is_active=1,
     description='Inspired by the adorable Nailong character, dressed up as a bright and cheerful sunflower! With its cute little face, vibrant orange petals and sunny yellow body, this little flower is sure to brighten up your day. Perfect for adding a touch of cuteness to your bag or keys! Height +-12cm.',
@@ -422,15 +407,6 @@ INSERT IGNORE INTO products (name, slug, category, price, description, image, st
 
 -- ---------------------------------------------------------
 --  PRODUCT DESIGNS (variants)
---  Only FIVE products have multiple designs:
---    BMO Keychain            -> Pink, Blue
---    Teddy and Lottie       -> Teddy, Lottie
---    Whale Keychain         -> Pink, Blue
---    Teletubbies Figurine   -> Po, Laa-Laa, Dipsy, Tinky Winky
---    Shaun and Bitzer       -> Shaun, Bitzer
---  Every other product is single-design: its "Other Design"
---  section hides automatically.
---
 --  No separate design photos exist yet, so each variant keeps
 --  the product's main image. When real design photos are added,
 --  update product_variants.image_path - the product page will
@@ -492,7 +468,6 @@ DELETE FROM products WHERE slug = 'sample-crochet-keychain';
 
 -- ---------------------------------------------------------
 --  UPGRADES FOR DATABASES IMPORTED FROM AN OLDER VERSION
---  (IF NOT EXISTS guards require MariaDB, e.g. XAMPP)
 -- ---------------------------------------------------------
 ALTER TABLE orders  ADD COLUMN IF NOT EXISTS notes TEXT NULL COMMENT 'Order notes written by the customer on the cart page' AFTER shipping_zone;
 ALTER TABLE reviews ADD COLUMN IF NOT EXISTS user_id INT UNSIGNED NULL COMMENT 'Logged-in customer who wrote the review (NULL = guest)' AFTER id;
