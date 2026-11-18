@@ -1,8 +1,6 @@
-/* ==========================================
-   PRODUCT PAGE - SA'ADATUL D.I.Y
-   ========================================== */
+/* PRODUCT PAGE - SA'ADATUL D.I.Y */
 
-/* --- PRODUCT PAGE LAYOUT --- */
+/*  PRODUCT PAGE LAYOUT  */
 
 .product-page-wrapper {
     background-color: #ffffff;
@@ -19,9 +17,7 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* ==========================================
-   LEFT SIDE: PRODUCT IMAGE
-   ========================================== */
+/* LEFT SIDE: PRODUCT IMAGE */
 
 .gallery-section {
     flex: 1;
@@ -63,9 +59,7 @@
 /* Slideshow arrows and dots removed */
 
 
-/* ==========================================
-   RIGHT SIDE: PRODUCT DETAILS
-   ========================================== */
+/* RIGHT SIDE: PRODUCT DETAILS */
 
 .details-section {
     flex: 1;
@@ -93,9 +87,7 @@
     margin-bottom: 15px;
 }
 
-/* ==========================================
-   STOCK AVAILABILITY
-   ========================================== */
+/* STOCK AVAILABILITY */
 
 .badges {
     display: flex;
@@ -122,9 +114,7 @@
 /* Custom Order Available badge removed */
 
 
-/* ==========================================
-   PRODUCT DESCRIPTION
-   ========================================== */
+/* PRODUCT DESCRIPTION */
 
 .product-desc {
     font-size: 14px;
@@ -134,9 +124,7 @@
 }
 
 
-/* ==========================================
-   OTHER DESIGNS
-   ========================================== */
+/* OTHER DESIGNS */
 
 .other-designs h3 {
     font-size: 16px;
@@ -198,9 +186,7 @@
 }
 
 
-/* ==========================================
-   QUANTITY SELECTOR
-   ========================================== */
+/* QUANTITY SELECTOR */
 
 .quantity-section {
     margin-bottom: 25px;
@@ -272,9 +258,7 @@
 }
 
 
-/* ==========================================
-   ADD TO CART BUTTON
-   ========================================== */
+/* ADD TO CART BUTTON */
 
 .action-row {
     margin-bottom: 30px;
@@ -307,44 +291,7 @@
     cursor: not-allowed;
 }
 
-/* Product Information section removed */
-/* You May Also Like section removed */
-
-
-/* ==========================================
-   RESPONSIVE DESIGN
-   ========================================== */
-
-/* Tablet */
-
-@media (max-width: 800px) {
-
-    .product-container {
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .gallery-section {
-        position: relative;
-        top: 0;
-        width: 100%;
-    }
-
-    .main-image-container {
-        max-width: 500px;
-        min-height: 350px;
-    }
-
-    .details-section {
-        width: 100%;
-        padding-top: 0;
-    }
-
-    .product-title {
-        font-size: 25px;
-    }
-
-}
+/* RESPONSIVE DESIGN */
 
 /* Mobile */
 

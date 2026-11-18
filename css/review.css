@@ -1,8 +1,6 @@
-/* =========================================
-   REVIEW PAGE SPECIFIC STYLES
-   ========================================= */
+/* REVIEW PAGE SPECIFIC STYLES */
 
-/* ---  INTER FONT --- */
+/*  INTER FONT */
 body, 
 .review-banner, 
 .review-card, 
@@ -14,7 +12,7 @@ textarea {
     font-family: 'Inter', sans-serif !important;
 }
 
-/* --- LOGO --- */
+/* LOGO */
 header a::after,
 .logo-link::after,
 header .logo-container::after {
@@ -30,7 +28,7 @@ header a,
     border-bottom: none !important;
 }
 
-/* --- PURPLE BANNER --- */
+/* PURPLE BANNER */
 .review-banner {
     background: #ded3e9 !important; 
     background-image: none !important; 
@@ -57,7 +55,7 @@ header a,
     text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* --- MAIN LAYOUT --- */
+/*  MAIN LAYOUT  */
 .review-container {
     max-width: 1050px;
     margin: 0 auto 60px;
@@ -86,7 +84,7 @@ header a,
     color: #263e78;
 }
 
-/* --- SOLID BLUE & YELLOW STARS --- */
+/* SOLID BLUE & YELLOW STARS  */
 .stars {
     display: flex;
     gap: 5px;
@@ -153,7 +151,7 @@ header a,
     color: #7b849e;
 }
 
-/* --- Delete Review Button --- */
+/* -- Delete Review Button  */
 .review-card {
     position: relative; /* Needed to position the X button */
 }
@@ -182,7 +180,7 @@ header a,
     transform: scale(1.1);
 }
 
-/* --- REVIEW FORM --- */
+/*  REVIEW FORM  */
 .review-form-section {
     margin-top: 35px;
     background: #f2f0fb;
@@ -283,7 +281,7 @@ header a,
 }
 
 /* Selected rating: review.js adds .filled to the labels whose
-   star value is <= the chosen rating (1-5). */
+   star value is the chosen rating (1-5). */
 .rating-input label.filled .form-star {
     background-color: #1c3169;
 }
@@ -307,7 +305,7 @@ header a,
     opacity: 1;
 }
 
-/* --- Review photo previews with remove (X) button --- */
+/* Review photo previews with remove (X) button  */
 .image-preview {
     display: flex;
     flex-wrap: wrap;
@@ -386,9 +384,7 @@ header a,
     background: #9c82bd;
 }
 
-/* =========================================
-   FOOTER (Matches Home Page)
-   ========================================= */
+/* FOOTER (Matches Home Page) */
 footer {
     background: #A6CCE0;
     padding-top: 10px;
@@ -492,7 +488,7 @@ footer {
     transform: scale(1.2);
 }
 
-/* --- 8. MOBILE RESPONSIVE --- */
+/*  MOBILE RESPONSIVE */
 @media (max-width: 750px) {
     .review-banner { padding: 40px 15px !important; margin: 20px 15px !important; }
     .review-banner h1 { font-size: 32px !important; }
@@ -514,7 +510,7 @@ footer {
         width: 100%;
     }
 }
-/* --- Independent scrolling for the review collection ---
+/* Independent scrolling for the review collection
    The review grid scrolls on its own while the review form
    below stays visible. Works on desktop and smaller screens. */
 #reviewGrid {
