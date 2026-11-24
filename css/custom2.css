@@ -3,6 +3,12 @@ body, main, section, div, p, h1, h2, h3, h4, h5, h6, a, button, input, textarea,
     font-family: 'Inter', sans-serif;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
 .fancy-text, .fancy-text * { font-family: 'Dancing Script', cursive !important; }
 .cute-text, .cute-text * { font-family: 'Delicious Handrawn', cursive !important; }
 .fa-solid, .fa-regular, .fa-brands { font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important; }

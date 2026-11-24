@@ -12,6 +12,12 @@ textarea {
     font-family: 'Inter', sans-serif !important;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
 /* LOGO */
 header a::after,
 .logo-link::after,

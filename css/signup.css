@@ -20,6 +20,10 @@ body {
     gap: 7px;
 }
 
+.logo-link {
+    text-decoration: none;
+}
+
 /* SIGNUP BACKGROUND */
 .signup-page {
     min-height: 650px;
