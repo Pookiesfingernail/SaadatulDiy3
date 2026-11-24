@@ -97,6 +97,15 @@ function createKeychainForm(item, index) {
             <label class="reference-photo-box">
                 <i class="fa-regular fa-image"></i>
                 <div>
+                            <p class="small-instruction">*Enter colour code from PDF if your choice of hairstyle or headwear is different.</p>
+            
+            <!-- ADD THIS BUTTON HERE -->
+            <button type="button" class="colour-chart-btn" onclick="openColourChart()">
+                <i class="fa-brands fa-google-drive"></i> View Colour Code Options
+            </button>
+
+            <textarea placeholder="Type in the colour number & hairstyle (if any)..." data-index="${index}" data-note="hairNote">${item.hairNote}</textarea>
+
                     <strong>Reference Photo Customisation:</strong><br>
                     Upload your own picture or reference photo to help us understand your preferred hairstyle. <strong>(Required)</strong>
                     <span class="file-upload-status" id="hairFile-${index}"></span>
@@ -527,6 +536,15 @@ function restoreDraft() {
     } catch (error) {
         sessionStorage.removeItem(DRAFT_KEY);
     }
+}
+
+// --- OPEN AND CLOSE COLOUR CHART MODAL ---
+function openColourChart() {
+    document.getElementById("colourChartModal").style.display = "flex";
+}
+
+function closeColourChart() {
+    document.getElementById("colourChartModal").style.display = "none";
 }
 
 // INITIAL DISPLAY

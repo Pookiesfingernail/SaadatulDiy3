@@ -84,13 +84,25 @@ function createFigurineForm(item, index) {
             </div>
         </section>
 
-        <!-- HAIR STYLING -->
+                <!-- HAIR STYLING -->
         <section class="form-section">
             <h3>Hair & Head Styling</h3>
-            <!-- REQUIRED UPLOAD: hairstyle reference photo. -->
+
+            <!-- REQUIRED UPLOAD: hairstyle reference photo.
+                 To make this optional, remove "required" in the
+                 validation below and in api/custom_order.php. -->
             <label class="reference-photo-box">
                 <i class="fa-regular fa-image"></i>
                 <div>
+                            <p class="small-instruction">*Enter colour code from PDF if your choice of hairstyle or headwear is different.</p>
+            
+            <!-- ADD THIS BUTTON HERE -->
+            <button type="button" class="colour-chart-btn" onclick="openColourChart()">
+                <i class="fa-brands fa-google-drive"></i> View Colour Code Options
+            </button>
+
+            <textarea placeholder="Type in the colour number & hairstyle (if any)..." data-index="${index}" data-note="hairNote">${item.hairNote}</textarea>
+            
                     <strong>Reference Photo Customisation:</strong><br>
                     Upload your own picture or reference photo to help us understand your preferred hairstyle. <strong>(Required)</strong>
                     <span class="file-upload-status" id="hairFile-${index}"></span>
@@ -101,6 +113,7 @@ function createFigurineForm(item, index) {
 
             <label>HAIRSTYLE / LENGTH / HEADWEAR OPTIONS</label>
             <div class="option-grid">
+
                 ${hairChoices.map(option => `
                     <button type="button" class="option-button ${item.hair === option.name ? "selected" : ""}" data-index="${index}" data-field="hair" data-value="${option.name}">
                         ${option.name}
@@ -503,6 +516,15 @@ function restoreDraft() {
     } catch (error) {
         sessionStorage.removeItem(DRAFT_KEY);
     }
+}
+
+// --- OPEN AND CLOSE COLOUR CHART MODAL ---
+function openColourChart() {
+    document.getElementById("colourChartModal").style.display = "flex";
+}
+
+function closeColourChart() {
+    document.getElementById("colourChartModal").style.display = "none";
 }
 
 // INITIAL DISPLAY
