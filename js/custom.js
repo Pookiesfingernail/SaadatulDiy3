@@ -59,7 +59,7 @@ function createKeychainForm(item, index) {
     });
 
     return `
-            <div class="section-heading">
+        <div class="section-heading">
             <span class="number">#${index + 1}</span>
             <h2>Keychain Customisation</h2>
         </div>
@@ -91,21 +91,9 @@ function createKeychainForm(item, index) {
         <section class="form-section">
             <h3>Hair & Head Styling</h3>
 
-            <!-- REQUIRED UPLOAD: hairstyle reference photo.
-                 To make this optional, remove "required" in the
-                 validation below and in api/custom_order.php. -->
             <label class="reference-photo-box">
                 <i class="fa-regular fa-image"></i>
                 <div>
-                            <p class="small-instruction">*Enter colour code from PDF if your choice of hairstyle or headwear is different.</p>
-            
-            <!-- ADD THIS BUTTON HERE -->
-            <button type="button" class="colour-chart-btn" onclick="openColourChart()">
-                <i class="fa-brands fa-google-drive"></i> View Colour Code Options
-            </button>
-
-            <textarea placeholder="Type in the colour number & hairstyle (if any)..." data-index="${index}" data-note="hairNote">${item.hairNote}</textarea>
-
                     <strong>Reference Photo Customisation:</strong><br>
                     Upload your own picture or reference photo to help us understand your preferred hairstyle. <strong>(Required)</strong>
                     <span class="file-upload-status" id="hairFile-${index}"></span>
@@ -124,6 +112,15 @@ function createKeychainForm(item, index) {
                 `).join("")}
             </div>
             <p class="small-instruction">*Enter colour code from PDF if your choice of hairstyle or headwear is different.</p>
+            
+            <!-- ACCORDION BUTTON & DROPDOWN -->
+            <button type="button" class="colour-chart-btn" onclick="toggleColourChart('hairChart-${index}')">
+                <i class="fa-solid fa-palette"></i> View Colour Code Options
+            </button>
+            <div class="colour-dropdown" id="hairChart-${index}">
+                <img src="photos/yarncolours.jpg" alt="Colour Chart">
+            </div>
+
             <textarea placeholder="Type in the colour number & hairstyle (if any)..." data-index="${index}" data-note="hairNote">${item.hairNote}</textarea>
         </section>
 
@@ -131,7 +128,6 @@ function createKeychainForm(item, index) {
         <section class="form-section">
             <h3>Outfit / Apparel</h3>
 
-            <!-- REQUIRED UPLOAD: outfit reference photo. -->
             <label class="reference-photo-box">
                 <i class="fa-regular fa-image"></i>
                 <div>
@@ -153,6 +149,15 @@ function createKeychainForm(item, index) {
                 `).join("")}
             </div>
             <p class="small-instruction">*Enter colour code from PDF if your choice of outfit is different.</p>
+            
+            <!-- ACCORDION BUTTON & DROPDOWN -->
+            <button type="button" class="colour-chart-btn" onclick="toggleColourChart('outfitChart-${index}')">
+                <i class="fa-solid fa-palette"></i> View Colour Code Options
+            </button>
+            <div class="colour-dropdown" id="outfitChart-${index}">
+                <img src="photos/yarncolours.jpg" alt="Colour Chart">
+            </div>
+
             <textarea placeholder="Type in the colour number & outfit request..." data-index="${index}" data-note="outfitNote">${item.outfitNote}</textarea>
         </section>
 
@@ -160,7 +165,6 @@ function createKeychainForm(item, index) {
         <section class="form-section">
             <h3>Optional Accessories & Details</h3>
             
-            <!-- OPTIONAL UPLOAD: accessories reference photo. -->
             <label class="reference-photo-box">
                 <i class="fa-regular fa-image"></i>
                 <div>
@@ -185,6 +189,15 @@ function createKeychainForm(item, index) {
                 }).join("")}
             </div>
             <p class="small-instruction">*Type in the colour number & accessories request if needed.</p>
+            
+            <!-- ACCORDION BUTTON & DROPDOWN -->
+            <button type="button" class="colour-chart-btn" onclick="toggleColourChart('accChart-${index}')">
+                <i class="fa-solid fa-palette"></i> View Colour Code Options
+            </button>
+            <div class="colour-dropdown" id="accChart-${index}">
+                <img src="photos/yarncolours.jpg" alt="Colour Chart">
+            </div>
+
             <textarea placeholder="Type in the colour number & accessories request..." data-index="${index}" data-note="accessoryNote">${item.accessoryNote}</textarea>
         </section>
     `;
@@ -538,13 +551,12 @@ function restoreDraft() {
     }
 }
 
-// --- OPEN AND CLOSE COLOUR CHART MODAL ---
-function openColourChart() {
-    document.getElementById("colourChartModal").style.display = "flex";
-}
-
-function closeColourChart() {
-    document.getElementById("colourChartModal").style.display = "none";
+// --- TOGGLE COLOUR CHART DROPDOWN ---
+function toggleColourChart(id) {
+    const dropdown = document.getElementById(id);
+    if (dropdown) {
+        dropdown.classList.toggle("active");
+    }
 }
 
 // INITIAL DISPLAY
