@@ -151,35 +151,6 @@ header a,
     color: #7b849e;
 }
 
-/* -- Delete Review Button  */
-.review-card {
-    position: relative; /* Needed to position the X button */
-}
-
-.delete-review-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-}
-
-.delete-review-btn:hover {
-    background: #c0392b;
-    transform: scale(1.1);
-}
-
 /*  REVIEW FORM  */
 .review-form-section {
     margin-top: 35px;

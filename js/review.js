@@ -102,26 +102,6 @@ function buildReviewCard(review) {
     heading.textContent = review.customerName;
     card.appendChild(heading);
 
-    if (review.id) {
-        const deleteBtn = document.createElement("button");
-        deleteBtn.className = "delete-review-btn";
-        deleteBtn.innerHTML = "&times;";
-        deleteBtn.title = "Delete this review";
-        deleteBtn.addEventListener("click", async () => {
-            if (confirm("Are you sure you want to delete this review?")) {
-                try {
-                    await SDIY.api("reviews.php", {
-                        method: "POST",
-                        body: { action: "delete", review_id: review.id }
-                    });
-                    card.remove(); // Removes it from the screen
-                } catch (error) {
-                    alert("Could not delete review: " + error.message);
-                }
-            }
-        });
-        card.appendChild(deleteBtn);
-    }
 
     const stars = document.createElement("div");
     stars.className = "stars";
