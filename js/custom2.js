@@ -106,7 +106,7 @@ function createFigurineForm(item, index) {
                     </button>
                 `).join("")}
             </div>
-            <p class="small-instruction">*Enter colour code from PDF if your choice of hairstyle or headwear is different.</p>
+            <p class="small-instruction">*Enter colour code if your choice of hairstyle or headwear is different.</p>
             
             <!-- ACCORDION BUTTON & DROPDOWN -->
             <button type="button" class="colour-chart-btn" onclick="toggleColourChart('hairChart-${index}')">
@@ -142,7 +142,7 @@ function createFigurineForm(item, index) {
                     </button>
                 `).join("")}
             </div>
-            <p class="small-instruction">*Enter colour code from PDF if your choice of outfit is different.</p>
+            <p class="small-instruction">*Enter colour code if your choice of outfit is different.</p>
             
             <!-- ACCORDION BUTTON & DROPDOWN -->
             <button type="button" class="colour-chart-btn" onclick="toggleColourChart('outfitChart-${index}')">
