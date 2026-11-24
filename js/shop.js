@@ -6,7 +6,7 @@ const categorySections = document.querySelectorAll('.category-section');
 const searchTerm = new URLSearchParams(window.location.search).get('search') || '';
 const categoryParam = new URLSearchParams(window.location.search).get('category') || '';
 
-// --- PRODUCT CARD ---
+// PRODUCT CARD
 function productCard(product) {
     const name = SDIY.escapeHtml(product.name);
 
@@ -49,7 +49,7 @@ function setHeart(button, isFavourite) {
     }
 }
 
-// --- LOAD PRODUCTS ---
+// LOAD PRODUCTS
 async function loadProducts() {
     try {
         const query = searchTerm ? '?search=' + encodeURIComponent(searchTerm) : '';
@@ -98,7 +98,7 @@ async function loadProducts() {
     }
 }
 
-// --- FAVOURITES ---
+//  FAVOURITES 
 shopContainer.addEventListener('click', async function (e) {
     const button = e.target.closest('.wishlist-btn');
     if (!button) return;
@@ -124,7 +124,7 @@ shopContainer.addEventListener('click', async function (e) {
     }
 });
 
-// --- CATEGORY FILTERING ---
+//  CATEGORY FILTERING 
 const MAX_VISIBLE_PRODUCTS = 5;
 const expandedCategories = new Set();
 let currentFilter = 'all';

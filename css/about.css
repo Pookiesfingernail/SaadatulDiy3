@@ -1,4 +1,4 @@
-/* ================= BASIC SETTINGS ================= */
+/*  BASIC SETTINGS  */
 
 .about-page {
     --ink: #243a76;
@@ -55,7 +55,7 @@
     outline-offset: 5px;
 }
 
-/* ================= SHARED HEADER ================= */
+/*  SHARED HEADER  */
 /* The main header/navigation styles come from global.css. */
 
 
@@ -82,7 +82,7 @@
     display: block;
 }
 
-/* ================= INTRODUCTION ================= */
+/*  INTRODUCTION  */
 
 .about-intro {
     padding: 45px 7% 55px;
@@ -212,7 +212,7 @@
     }
 }
 
-/* ================= MY STORY ================= */
+/*  MY STORY  */
 
 .my-story {
     position: relative;
@@ -354,7 +354,7 @@
     pointer-events: none;
 }
 
-/* ================= PURPLE PAPER ================= */
+/*  PURPLE PAPER  */
 
 .torn-paper {
     position: relative;
@@ -385,7 +385,7 @@
     pointer-events: none;
 }
 
-/* ================= CROCHET UNIQUENESS ================= */
+/*  CROCHET UNIQUENESS  */
 
 .unique-section {
     padding: 45px 7%;
@@ -443,7 +443,7 @@
     font-style: italic;
 }
 
-/* ================= CUBE LOCATION ================= */
+/*  CUBE LOCATION  */
 
 .cube-section {
     display: grid;
@@ -559,7 +559,7 @@
 .about-page .torn-paper .location-button {
     border-color: #ffffff;
 }
-/* ================= POP-UP EVENTS ================= */
+/*  POP-UP EVENTS  */
 
 .popup-section {
     padding: 35px 7% 60px;
@@ -622,7 +622,7 @@
     font-size: 32px;
 }
 
-/* ================= FOOTER ================= */
+/*  FOOTER  */
 
 .about-footer {
     display: grid;
@@ -665,7 +665,7 @@
     text-align: center;
 }
 
-/* ================= LOCATION POPUP ================= */
+/*  LOCATION POPUP  */
 
 #locationDialog {
     width: min(460px, calc(100% - 30px));
@@ -717,7 +717,7 @@
     text-decoration: none;
 }
 
-/* ================= SMALL LAPTOP NAVIGATION ================= */
+/*  SMALL LAPTOP NAVIGATION  */
 
 @media (max-width: 1200px) {
     .about-page .nav-bar nav {
@@ -746,112 +746,7 @@
     }
 }
 
-/* ================= TABLET ================= */
-
-@media (max-width: 760px) {
-    .about-intro {
-        padding: 30px 25px;
-    }
-
-    .intro-layout {
-        grid-template-columns: minmax(0, 1fr) 150px;
-        gap: 18px;
-    }
-
-    .intro-text p {
-        font-size: 14px;
-        letter-spacing: 0.4px;
-    }
-
-    .hooks-image {
-        height: 100px;
-    }
-
-    .my-story {
-        padding: 30px 25px;
-    }
-
-    .story-top {
-        grid-template-columns: 200px minmax(0, 1fr);
-        gap: 25px;
-    }
-
-    .story-introduction h2 {
-        font-size: 34px;
-    }
-
-    .founder-name {
-        font-size: 30px;
-    }
-
-    .bear-decoration {
-        right: 20px;
-        width: 150px;
-        height: 300px;
-    }
-
-    .story-middle {
-        grid-template-columns: 170px minmax(0, 1fr);
-        gap: 20px;
-    }
-
-    .yarn-decoration {
-        width: 160px;
-    }
-
-    .my-story p:not(.founder-name) {
-        font-size: 14px;
-    }
-
-    .unique-section {
-        padding: 35px 25px;
-    }
-
-    .unique-grid {
-        gap: 18px;
-    }
-
-    .unique-card h3 {
-        font-size: 23px;
-    }
-
-    .unique-card p {
-        font-size: 14px;
-    }
-
-    .cube-section {
-        gap: 25px;
-        padding: 30px 25px;
-    }
-
-    .cube-details h2 {
-        margin-bottom: 25px;
-    }
-
-    .cube-details h3 {
-        font-size: 19px;
-    }
-
-    .cube-details p,
-    .whatsapp-link {
-        font-size: 14px;
-    }
-
-    .interactive-map {
-        height: 280px;
-    }
-
-    .event-grid {
-        gap: 35px;
-    }
-
-    .about-footer {
-        padding: 25px 20px;
-        font-size: 14px;
-    }
-}
-
-/* ================= MOBILE ================= */
+/*  MOBILE  */
 
 @media (max-width: 540px) {
     .about-page .logo-container {

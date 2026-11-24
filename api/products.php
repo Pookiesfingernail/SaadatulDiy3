@@ -1,9 +1,9 @@
 <?php
 /*
  * PRODUCTS - GET
- *   api/products.php                 all products (optional ?category=keychain, ?search=word)
- *   api/products.php?id=2            one product + designs (variants) + gallery + other designs
- *   api/products.php?slug=rbaf-plushie   same, looked up by slug
+ *   api/products.php - all products (optional ?category=keychain, ?search=word)
+ *   api/products.php?id=2 - one product + designs (variants) + gallery + other designs
+ *   api/products.php?slug=rbaf-plushie - same, looked up by slug
  */
 
 declare(strict_types=1);
@@ -35,7 +35,7 @@ function product_variants(int $productId): array
     ], $stmt->fetchAll());
 }
 
-// ---------- Single product ----------
+// Single product 
 $slug = clean_text($_GET['slug'] ?? '');
 if (isset($_GET['id']) || $slug !== '') {
     $productId = positive_int($_GET['id'] ?? 0);
@@ -82,7 +82,7 @@ if (isset($_GET['id']) || $slug !== '') {
     ]);
 }
 
-// ---------- Product list ----------
+// Product list 
 $where = ['is_active = 1'];
 $params = [];
 

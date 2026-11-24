@@ -10,16 +10,10 @@
     if (window.SDIY) return;
 
     // CENTRAL API CONFIGURATION - every page uses this one address.
-    //
     // Local development: the PHP backend runs separately on port 8000
     // (see start-backend.bat / SETUP.md) while Live Server serves the
     // frontend on its own port. The browser calls the API directly
     // (cross-origin) - CORS + session cookies are configured for this.
-    //
-    // Configuration order (first match wins):
-    //   1. window.SDIY_API_BASE  - set before this file loads
-    //   2. localStorage "sdiyApiBase" - e.g. for a hosted backend
-    //   3. the DEFAULT below
     const DEFAULT_API_BASE = "http://127.0.0.1:8000/api/";
     const API_BASE =
         window.SDIY_API_BASE ||
@@ -31,7 +25,8 @@
 
     let sessionPromise = null;
 
-    // ---------- Helpers ----------
+    //  Helpers 
+    
 
     function escapeHtml(value) {
         return String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -48,7 +43,7 @@
         return file + window.location.search + window.location.hash;
     }
 
-    // Only allow redirects to pages of this website (e.g. "shop.html?id=2").
+    // Only allow redirects to pages of this website
     function safeRedirect(target, fallback = "account.html") {
         return /^[a-z0-9_-]+\.html([?#][^\s]*)?$/i.test(target || "") ? target : fallback;
     }
@@ -62,7 +57,7 @@
         window.location.href = loginUrl();
     }
 
-    // ---------- Talking to the PHP backend ----------
+    //  Talking to the PHP backend 
 
     async function api(path, options = {}) {
 
@@ -132,7 +127,7 @@
     }
 
     // variantId is optional - pass it when the product has designs
-    // (e.g. Pink / Blue). The server always uses the database price.
+    // The server always uses the database price.
     async function addToCart(productId, quantity = 1, variantId = null) {
         const user = await requireLogin("Please log in or sign up to add items to your cart.");
         if (!user) return null;
@@ -166,7 +161,7 @@
         window.location.href = "index.html";
     }
 
-    // ---------- Cart badge ----------
+    //  Cart badge 
 
     function setCartCount(count) {
         document.querySelectorAll(".cart-icon a").forEach(link => {
@@ -184,7 +179,7 @@
         });
     }
 
-    // ---------- Small pop-up message ----------
+    //  Small pop-up message 
 
     function toast(message, type = "success") {
         let box = document.querySelector(".sdiy-toast");
@@ -204,7 +199,7 @@
         box.hideTimer = setTimeout(() => box.classList.remove("show"), 3200);
     }
 
-    // ---------- Account dropdown ----------
+    //  Account dropdown 
 
     function buildAccountMenu(session) {
 
@@ -273,7 +268,7 @@
         });
     }
 
-    // ---------- Navigation search -> Shop page ----------
+    //  Navigation search -> Shop page 
 
     function connectSearch() {
         document.querySelectorAll(".searchbar").forEach(bar => {
